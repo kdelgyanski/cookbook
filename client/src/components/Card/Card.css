@@ -1,0 +1,14 @@
+.app-card {
+    max-width: 300px;
+    min-width: 230px;
+    height: 300px;
+}
+
+.app-card .card-image {
+    height: 75%;
+}
+
+.app-card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}

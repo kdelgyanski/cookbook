@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Header, TextField } from './components';
+import { Header, TextField, Card } from './components';
+
+import './App.css';
 
 function App() {
 
@@ -9,6 +11,12 @@ function App() {
         { name: 'Soups', link: '/soups/' },
         { name: 'Main Dishes', link: '/main-dishes/' },
         { name: 'Desserts', link: '/desserts/' },
+    ];
+
+    const weeklyTopMainDishes = [
+        { title: 'Grilled Chicken Fillet', imgUrl: 'grilled-chicken-fillet.jpg' },
+        { title: 'Backed Salmon', imgUrl: 'salmon.jpg' },
+        { title: 'Pasta with meatballs', imgUrl: 'pasta-with-meatballs.jpeg' },
     ];
 
     const [searchValue, setSearchValue] = React.useState('');
@@ -25,6 +33,16 @@ function App() {
                 >
                     {searchValue}
                 </TextField>
+
+                <div className='container weekly-top-container'>
+                    {weeklyTopMainDishes.map(mainDish =>
+                        <Card
+                            key={mainDish.title}
+                            title={mainDish.title}
+                            imgUrl={mainDish.imgUrl}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

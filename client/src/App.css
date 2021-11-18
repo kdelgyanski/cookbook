@@ -1,0 +1,7 @@
+.weekly-top-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    margin: 1em 0 1em 0;
+}
