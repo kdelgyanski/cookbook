@@ -8,7 +8,7 @@ const TextField = ({
     return (
         <input
             id={id}
-            className={className}
+            className={`form-control ${className}`}
             name={`${id}-name`}
             type='text'
             placeholder={placeholder}

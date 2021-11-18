@@ -14,9 +14,9 @@ function App() {
     const [searchValue, setSearchValue] = React.useState('');
 
     return (
-        <div className='app-wrapper'>
+        <div className='container app-wrapper'>
             <Header navLinks={navLinks} />
-            <div className='content'>
+            <div className='container content'>
                 Hello from Cookbook! Happy cooking! :)
                 <TextField
                     id='search-input'
