@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, TextField } from '../../components';
+import { Card, TextField, Panel } from '../../components';
 
 const Home = () => {
 
@@ -7,6 +7,14 @@ const Home = () => {
         { title: 'Grilled Chicken Fillet', imgUrl: 'grilled-chicken-fillet.jpg' },
         { title: 'Backed Salmon', imgUrl: 'salmon.jpg' },
         { title: 'Pasta with meatballs', imgUrl: 'pasta-with-meatballs.jpeg' },
+    ];
+
+    const seasonalTop = [
+        { title: 'Creamy Vegan Pumpkin Soup', imgUrl: 'creamy-vegan-pumpkin-soup.jpg' },
+        { title: 'Oven Baked Feta Pasta', imgUrl: 'oven-baked-feta-pasta.jpg' },
+        { title: 'Pumpkin Pie', imgUrl: 'pumpkin-pie.jpg' },
+        { title: 'Slow Cooked Pork', imgUrl: 'slow-cooked-pork.jpg' },
+        { title: 'Slow Cooked Beef', imgUrl: 'slow-cooker-beef.jpg' },
     ];
 
     const [searchValue, setSearchValue] = React.useState('');
@@ -22,7 +30,11 @@ const Home = () => {
                 {searchValue}
             </TextField>
 
-            <div className='container weekly-top-container'>
+            <Panel
+                className='weekly-top-main-dishes-panel'
+                maxVisibleItems={3}
+                title='Pick of the week'
+            >
                 {weeklyTopMainDishes.map(mainDish =>
                     <Card
                         key={mainDish.title}
@@ -30,7 +42,21 @@ const Home = () => {
                         imgUrl={mainDish.imgUrl}
                     />
                 )}
-            </div>
+            </Panel>
+
+            <Panel
+                className='seasonal-top-panel'
+                maxVisibleItems={3}
+                title='Seasonal'
+            >
+                {seasonalTop.map(recipe =>
+                    <Card
+                        key={recipe.title}
+                        title={recipe.title}
+                        imgUrl={recipe.imgUrl}
+                    />
+                )}
+            </Panel>
         </div>
     );
 }
