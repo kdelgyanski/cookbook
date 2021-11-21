@@ -1,8 +1,10 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { Header, TextField, Card } from './components';
+import { Header } from './components';
 
 import './App.css';
+import { Home, Details, Search, Login, MyKitchen, CreateRecipe } from './pages';
 
 function App() {
 
@@ -11,39 +13,25 @@ function App() {
         { name: 'Soups', link: '/soups/' },
         { name: 'Main Dishes', link: '/main-dishes/' },
         { name: 'Desserts', link: '/desserts/' },
+        { name: 'Login', link: '/login' },
+        { name: 'MyKitchen', link: '/my-kitchen' },
     ];
-
-    const weeklyTopMainDishes = [
-        { title: 'Grilled Chicken Fillet', imgUrl: 'grilled-chicken-fillet.jpg' },
-        { title: 'Backed Salmon', imgUrl: 'salmon.jpg' },
-        { title: 'Pasta with meatballs', imgUrl: 'pasta-with-meatballs.jpeg' },
-    ];
-
-    const [searchValue, setSearchValue] = React.useState('');
 
     return (
         <div className='container app-wrapper'>
             <Header navLinks={navLinks} />
-            <div className='container content'>
-                Hello from Cookbook! Happy cooking! :)
-                <TextField
-                    id='search-input'
-                    onChange={e => setSearchValue(e.target.value)}
-                    placeholder='Search for a recipe...'
-                >
-                    {searchValue}
-                </TextField>
 
-                <div className='container weekly-top-container'>
-                    {weeklyTopMainDishes.map(mainDish =>
-                        <Card
-                            key={mainDish.title}
-                            title={mainDish.title}
-                            imgUrl={mainDish.imgUrl}
-                        />
-                    )}
-                </div>
-            </div>
+            <main className='container content'>
+                Hello from Cookbook! Happy cooking! :)
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/create-recipe' element={<CreateRecipe />} />
+                    <Route path='/search' element={<Search />} />
+                    <Route path='/my-kitchen' element={<MyKitchen />} />
+                    <Route path='/details' element={<Details />} />
+                </Routes>
+            </main>
         </div>
     );
 }
