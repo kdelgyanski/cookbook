@@ -29,7 +29,7 @@ function App() {
                     <Route path='/create-recipe' element={<CreateRecipe />} />
                     <Route path='/search' element={<Search />} />
                     <Route path='/my-kitchen' element={<MyKitchen />} />
-                    <Route path='/details' element={<Details />} />
+                    <Route path='/details/:id' element={<Details />} />
                 </Routes>
             </main>
         </div>
