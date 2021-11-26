@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const usersRoutes = require('./routes/user-routes.js');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -12,9 +14,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/cookbook', (req, res, next) => {
-    res.status(200).send({ version: '0.0.1' });
-});
+app.use('/api/users', usersRoutes);
 
 app.use((req, res, next) => {
     throw new Error('Could not found this route.');
