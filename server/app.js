@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const usersRoutes = require('./routes/user-routes.js');
+const recipesRoutes = require('./routes/recipes-routes.js');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/users', usersRoutes);
+
+app.use('/api/recipes', recipesRoutes);
 
 app.use((req, res, next) => {
     throw new Error('Could not found this route.');
