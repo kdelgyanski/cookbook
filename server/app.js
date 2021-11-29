@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 const usersRoutes = require('./routes/user-routes.js');
 const recipesRoutes = require('./routes/recipes-routes.js');
+
+dotenv.config();
 
 const app = express();
 
@@ -23,4 +27,7 @@ app.use((req, res, next) => {
     throw new Error('Could not found this route.');
 });
 
-app.listen(8000);
+mongoose
+    .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.kehtm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
+    .then(() => app.listen(8000))
+    .catch(err => console.log(err));
