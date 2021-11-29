@@ -3,18 +3,28 @@ const TextField = ({
     className,
     onChange,
     children,
-    placeholder
+    placeholder,
+    label,
+    type
 }) => {
     return (
-        <input
-            id={id}
-            className={`form-control ${className}`}
-            name={`${id}-name`}
-            type='text'
-            placeholder={placeholder}
-            value={children}
-            onChange={onChange}
-        />
+        <>
+            {label && <label
+                id={`${id}-label`}
+                htmlFor={id}
+            >
+                {label}
+            </label>}
+            <input
+                id={id}
+                className={`form-control ${className}`}
+                name={`${id}-name`}
+                type={type ? type : 'text'}
+                placeholder={placeholder}
+                value={children}
+                onChange={e => onChange(e.target.value)}
+            />
+        </>
     );
 };
 

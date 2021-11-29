@@ -24,7 +24,7 @@ const Home = () => {
             This is the Home Page
             <TextField
                 id='search-input'
-                onChange={e => setSearchValue(e.target.value)}
+                onChange={setSearchValue}
                 placeholder='Search for a recipe...'
             >
                 {searchValue}
