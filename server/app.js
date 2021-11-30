@@ -27,6 +27,10 @@ app.use((req, res, next) => {
     throw new Error('Could not found this route.');
 });
 
+app.use((error, req, res, next) => {
+    res.status(error.code || 500).json({ message: error.message || 'General error' });
+});
+
 mongoose
     .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.kehtm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     .then(() => app.listen(8000))

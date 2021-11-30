@@ -1,4 +1,4 @@
-const HttpError = require('../models/HttpError');
+const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
 const getAll = async (req, res, next) => {
