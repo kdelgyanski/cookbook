@@ -2,7 +2,7 @@ const BASE_URL = 'http://localhost:8000/api';
 const USERS_PATH = '/users';
 
 export const login = async (username, password) => {
-    fetch(`${BASE_URL}${USERS_PATH}/login`, {
+    return fetch(`${BASE_URL}${USERS_PATH}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -12,12 +12,17 @@ export const login = async (username, password) => {
             password: password
         })
     })
-        .then(res => res.json())
-        .catch(error => console.error(error));
+        .then(res => {
+            const responseData = res.json();
+            if (!res.ok) {
+                throw new Error(responseData.message);
+            }
+            return responseData;
+        });
 };
 
 export const signUp = (username, email, password) => {
-    fetch(`${BASE_URL}${USERS_PATH}/signUp`, {
+    return fetch(`${BASE_URL}${USERS_PATH}/signUp`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,6 +33,11 @@ export const signUp = (username, email, password) => {
             password: password
         })
     })
-        .then(res => res.json())
-        .catch(error => console.error(error));
+        .then(res => {
+            const responseData = res.json();
+            if (!res.ok) {
+                throw new Error(responseData.message);
+            }
+            return responseData;
+        });
 };

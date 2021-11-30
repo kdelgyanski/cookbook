@@ -20,7 +20,7 @@ const Login = () => {
 
         const login = async () => {
             try {
-                authService.login(username, password);
+                await authService.login(username, password);
 
                 setUsername('');
                 setPassword('');
