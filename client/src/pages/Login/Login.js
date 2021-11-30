@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField } from '../../components'
+import { TextField, ErrorModal } from '../../components'
 
 import * as authService from '../../services/authService';
 
@@ -16,6 +16,7 @@ const Login = () => {
     const [password, setPassword] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [isLoginMode, setIsLoginMode] = React.useState(false);
+    const [error, setError] = React.useState(null);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -33,6 +34,7 @@ const Login = () => {
                     navigate('/');
                 } catch (err) {
                     console.error(err);
+                    setError(err.message);
                 }
             }
 
@@ -51,6 +53,7 @@ const Login = () => {
                     navigate('/');
                 } catch (err) {
                     console.error(err);
+                    setError(err.message);
                 }
             }
 
@@ -64,6 +67,7 @@ const Login = () => {
 
     return (
         <div className='container app-page'>
+            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             <form id='app-form' onSubmit={handleSubmit}>
                 <TextField
                     id={'login-username'}

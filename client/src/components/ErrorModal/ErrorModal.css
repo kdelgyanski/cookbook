@@ -1,0 +1,13 @@
+.app-modal {
+    z-index: 10;
+    height: 300px;
+    width: 50%;
+    margin: 22vh 25%;
+    position: fixed;
+    border: 1px solid black;
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+}
