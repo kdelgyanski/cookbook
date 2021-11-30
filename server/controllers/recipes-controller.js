@@ -1,3 +1,9 @@
+const mongoose = require('mongoose');
+
+const HttpError = require('../models/http-error');
+const User = require('../models/user');
+const Recipe = require('../models/recipe');
+
 const RECIPES = [
     {
         id: 1,
@@ -54,7 +60,53 @@ const RECIPES = [
 
 
 const getAll = (req, res, next) => {
+    console.log(req.query);
     res.status(200).json(RECIPES);
 };
 
+const create = async (req, res, next) => {
+
+    const authorId = req.body.authorId;
+
+    let author;
+    try {
+        author = await User.findById(authorId);
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Please try again later!', 500));
+    }
+
+    if (!author) {
+        return next(new HttpError('Author with id ' + authorId + ' was not found!', 404));
+    }
+
+    const recipe = new Recipe({
+        authorId,
+        title: req.body.title,
+        timeToCook: req.body.timeToCook,
+        preparationTime: req.body.preparationTime,
+        servingPortions: req.body.servingPortions,
+        course: req.body.course,
+        difficulty: req.body.difficulty,
+        ingredients: req.body.ingredients,
+        steps: req.body.steps,
+        seasonal: req.body.seasonal,
+        category: req.body.category
+    });
+
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await recipe.save({ session: session });
+        author.recipes.push(recipe);
+        await author.save({ session: session });
+        await session.commitTransaction();
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Could not create recipe! Please try again later!', 500));
+    }
+
+    res.status(201).json(recipe.toObject({ getters: true }));
+
+};
+
 exports.getAll = getAll;
+exports.create = create;
