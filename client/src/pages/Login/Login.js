@@ -20,12 +20,12 @@ const Login = () => {
 
         const login = async () => {
             try {
-                await authService.login(username, password);
+                const responseData = await authService.login(username, password);
 
                 setUsername('');
                 setPassword('');
 
-                auth.login(username);
+                auth.login(responseData.userId, responseData.token);
 
                 navigate('/');
             } catch (err) {

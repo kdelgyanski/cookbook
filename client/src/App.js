@@ -12,23 +12,24 @@ function App() {
 
     const auth = React.useContext(AuthContext);
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-    const [user, setUser] = React.useState(null);
+    const [token, setToken] = React.useState(null);
+    const [userId, setUserId] = React.useState(null);
 
-    const login = (user) => {
-        setIsLoggedIn(true);
-        setUser(user);
+    const login = (userId, token) => {
+        setToken(token);
+        setUserId(userId);
     };
 
     const logout = () => {
-        setIsLoggedIn(false);
-        setUser(null);
+        setToken(null);
+        setUserId(null);
     };
 
     return (
         <AuthContext.Provider value={{
-            isLoggedIn: isLoggedIn,
-            user: user,
+            isLoggedIn: !!token,
+            token: token,
+            userId: userId,
             login: login,
             logout: logout
         }}>
