@@ -10,6 +10,7 @@ const Header = ({
                         key={navLink.name}
                         href={`${navLink.link}`}
                         className='nav-link'
+                        onClick={navLink.onClick ? navLink.onClick : undefined}
                     >
                         {navLink.name}
                     </a>
