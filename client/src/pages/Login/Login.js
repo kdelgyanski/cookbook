@@ -14,27 +14,53 @@ const Login = () => {
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [isLoginMode, setIsLoginMode] = React.useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        const login = async () => {
-            try {
-                const responseData = await authService.login(username, password);
+        if (isLoginMode) {
+            const login = async () => {
+                try {
+                    const responseData = await authService.login(username, password);
 
-                setUsername('');
-                setPassword('');
+                    setUsername('');
+                    setPassword('');
 
-                auth.login(responseData.userId, responseData.token);
+                    auth.login(responseData.userId, responseData.token);
 
-                navigate('/');
-            } catch (err) {
-                console.error(err);
+                    navigate('/');
+                } catch (err) {
+                    console.error(err);
+                }
             }
-        }
 
-        login();
+            login();
+        } else {
+            const signUp = async () => {
+                try {
+                    const responseData = await authService.signUp(username, email, password);
+
+                    setUsername('');
+                    setEmail('');
+                    setPassword('');
+
+                    auth.login(responseData.userId, responseData.token);
+
+                    navigate('/');
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            signUp();
+        }
     }
+
+    const switchModeHandler = () => {
+        setIsLoginMode(oldState => !oldState);
+    };
 
     return (
         <div className='container app-page'>
@@ -46,6 +72,13 @@ const Login = () => {
                 >
                     {username}
                 </TextField>
+                {!isLoginMode && <TextField
+                    id={'login-email'}
+                    label='E-Mail'
+                    onChange={setEmail}
+                >
+                    {email}
+                </TextField>}
                 <TextField
                     id={'login-password'}
                     label='Password'
@@ -56,11 +89,18 @@ const Login = () => {
                 </TextField>
                 <button
                     className='btn btn-primary'
-                    disabled={username === '' || password === ''}
+                    disabled={isLoginMode ? username === '' || password === '' : username === '' || password === '' || email === ''}
                 >
-                    Login
+                    {isLoginMode ? 'Login' : 'Sign Up'}
                 </button>
             </form>
+            <button
+                id='switch-mode'
+                className='btn btn-primary'
+                onClick={switchModeHandler}
+            >
+                Switch Mode
+            </button>
         </div>
     );
 }
