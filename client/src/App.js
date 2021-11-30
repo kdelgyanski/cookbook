@@ -25,17 +25,6 @@ function App() {
         setUser(null);
     };
 
-    const navLinks = [
-        { name: 'Salads', link: '/salads/' },
-        { name: 'Soups', link: '/soups/' },
-        { name: 'Main Dishes', link: '/main-dishes/' },
-        { name: 'Desserts', link: '/desserts/' }
-    ];
-
-    auth.isLoggedIn
-        ? navLinks.push({ name: 'MyKitchen', link: '/my-kitchen' }, { name: 'Logout', link: '/', onClick: auth.logout })
-        : navLinks.push({ name: 'Login', link: '/login' });
-
     return (
         <AuthContext.Provider value={{
             isLoggedIn: isLoggedIn,
@@ -44,7 +33,7 @@ function App() {
             logout: logout
         }}>
             <div className='container app-wrapper'>
-                <Header navLinks={navLinks} />
+                <Header />
 
                 <main className='container content'>
                     Hello from Cookbook! Happy cooking! :)

@@ -1,7 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TextField } from '../../components'
 
+import * as authService from '../../services/authService';
+
+import AuthContext from '../../context/AuthContext';
+
 const Login = () => {
+
+    const auth = React.useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -9,10 +18,22 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        // TODO: send request to login
+        const login = async () => {
+            try {
+                authService.login(username, password);
 
-        setUsername('');
-        setPassword('');
+                setUsername('');
+                setPassword('');
+
+                auth.login(username);
+
+                navigate('/');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        login();
     }
 
     return (
