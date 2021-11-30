@@ -59,9 +59,16 @@ const RECIPES = [
 ]
 
 
-const getAll = (req, res, next) => {
-    console.log(req.query);
-    res.status(200).json(RECIPES);
+const getAll = async (req, res, next) => {
+
+    let recipes;
+    try {
+        recipes = await Recipe.find({});
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Could not get recipies!', 500));
+    }
+
+    res.status(200).json(recipes.map(r => r.toObject({ getters: true })));
 };
 
 const create = async (req, res, next) => {
