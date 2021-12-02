@@ -31,7 +31,7 @@ const Login = () => {
 
                     auth.login(responseData.userId, responseData.token);
 
-                    navigate('/');
+                    navigate(`/${responseData.userId}/my-kitchen`);
                 } catch (err) {
                     console.error(err);
                     setError(err.message);

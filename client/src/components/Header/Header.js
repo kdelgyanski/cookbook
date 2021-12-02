@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const Header = () => {
@@ -13,7 +14,10 @@ const Header = () => {
     ];
 
     auth.isLoggedIn
-        ? navLinks.push({ name: 'MyKitchen', link: '/my-kitchen' }, { name: 'Logout', link: '/', onClick: auth.logout })
+        ? navLinks.push(
+            { name: 'MyKitchen', link: `/${auth.userId}/my-kitchen` },
+            { name: 'Logout', link: '/', onClick: auth.logout }
+        )
         : navLinks.push({ name: 'Login', link: '/login' });
 
     return (
@@ -21,14 +25,14 @@ const Header = () => {
             <h2 className='display-3'>This is the header</h2>
             <nav className='nav'>
                 {navLinks.map(navLink =>
-                    <a
+                    <Link
                         key={navLink.name}
-                        href={`${navLink.link}`}
+                        to={`${navLink.link}`}
                         className='nav-link'
                         onClick={navLink.onClick ? navLink.onClick : undefined}
                     >
                         {navLink.name}
-                    </a>
+                    </Link>
                 )}
             </nav>
         </header>

@@ -15,7 +15,9 @@ const get = async (url) => {
     const responseData = await response.json();
 
     if (!response.ok) {
-        throw new Error(responseData.message);
+        const err = new Error(responseData.message);
+        err.statusCode = response.status;
+        throw err;
     }
     return responseData;
 };
