@@ -22,7 +22,7 @@ const TextField = ({
                 type={type ? type : 'text'}
                 placeholder={placeholder}
                 value={children}
-                onChange={e => onChange(e.target.value)}
+                onChange={onChange && ((e) => onChange(e.target.value))}
             />
         </>
     );

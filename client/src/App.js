@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header } from './components';
 
 import './App.css';
-import { Home, Details, Search, Login, MyKitchen } from './pages';
+import { Home, Details, Search, Login, MyKitchen, CreateRecipe } from './pages';
 
 import AuthContext from './context/AuthContext';
 
@@ -37,6 +37,7 @@ function App() {
                         <Route path='/' element={<Home />} />
                         <Route path='/search' element={<Search />} />
                         {!!token && <Route path='/:userId/my-kitchen' element={<MyKitchen />} />}
+                        {!!token && <Route path='/create-recipe' element={<CreateRecipe />} />}
                         <Route path='/details/:id' element={<Details />} />
                         {!token && <Route path='/login' element={<Login />} />}
                     </Routes>
