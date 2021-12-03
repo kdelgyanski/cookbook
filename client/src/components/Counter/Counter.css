@@ -1,0 +1,21 @@
+.counter-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.counter-value {
+    border: none;
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    width: 3em;
+    font-size: 2rem;
+    cursor: inherit;
+}
+
+.counter-value:focus-visible {
+    outline-offset: unset;
+    outline-width: inherit;
+    cursor: inherit;
+}

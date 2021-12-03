@@ -2,36 +2,21 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 // import * as recipeService from '../../services/recipeService';
 
-import { TextField } from '../../components';
+import { TextField, Counter } from '../../components';
 
 
 const CreateRecipe = () => {
 
     const auth = useContext(AuthContext);
+    const [recipe, setRecipe] = React.useState({ authorId: auth.userId, servingPortions: 1 });
 
-    const [recipe, setRecipe] = React.useState({ authorId: auth.userId });
-
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        prepareData(e.currentTarget);
+        // TODO: call api
+        console.log('api call goes here');
+        console.log(recipe);
 
-        const fetchCreateRecipe = async () => {
-            // TODO: call api
-            console.log('api call goes here');
-            console.log(recipe);
-        };
-
-        fetchCreateRecipe();
-    };
-
-    const prepareData = (form) => {
-        const formData = new FormData(form);
-
-        setRecipe(oldState => ({
-            ...oldState,
-            title: formData.get('title-name')
-        }));
     };
 
     return (
@@ -40,7 +25,25 @@ const CreateRecipe = () => {
                 <TextField
                     id='title'
                     label='Title'
+                    onChange={(value) => setRecipe(recipe => ({ ...recipe, title: value }))}
                 />
+                <Counter
+                    id='serving-portions'
+                    label='Serving Portions'
+                    onDecrease={(e) => {
+                        e.preventDefault();
+                        if (recipe.servingPortions > 1) {
+                            setRecipe(recipe => ({ ...recipe, servingPortions: recipe.servingPortions - 1 }));
+                        }
+                    }}
+                    decreaseDisabled={recipe.servingPortions < 2}
+                    onIncrease={(e) => {
+                        e.preventDefault();
+                        setRecipe(recipe => ({ ...recipe, servingPortions: recipe.servingPortions + 1 }));
+                    }}
+                >
+                    {recipe.servingPortions}
+                </Counter>
                 <button className='btn btn-primary'>Add</button>
             </form>
         </div>
