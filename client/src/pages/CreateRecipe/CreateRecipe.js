@@ -5,10 +5,30 @@ import AuthContext from '../../context/AuthContext';
 import { TextField, Counter } from '../../components';
 
 
+const reducer = (recipe, action) => {
+    let newRecipe;
+
+    switch (action.type) {
+        case 'CHANGE_TITLE':
+            newRecipe = { ...recipe, title: action.payload }
+            break;
+        case 'INCREASE_SERVING_PORTIONS':
+            newRecipe = { ...recipe, servingPortions: recipe.servingPortions + 1 }
+            break;
+        case 'DECREASE_SERVING_PORTIONS':
+            newRecipe = { ...recipe, servingPortions: recipe.servingPortions - 1 }
+            break;
+        default:
+            newRecipe = { ...recipe };
+    };
+
+    return newRecipe;
+};
+
 const CreateRecipe = () => {
 
     const auth = useContext(AuthContext);
-    const [recipe, setRecipe] = React.useState({ authorId: auth.userId, servingPortions: 1 });
+    const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1 });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +45,7 @@ const CreateRecipe = () => {
                 <TextField
                     id='title'
                     label='Title'
-                    onChange={(value) => setRecipe(recipe => ({ ...recipe, title: value }))}
+                    onChange={(value) => dispatch({ type: 'CHANGE_TITLE', payload: value })}
                 />
                 <Counter
                     id='serving-portions'
@@ -33,13 +53,13 @@ const CreateRecipe = () => {
                     onDecrease={(e) => {
                         e.preventDefault();
                         if (recipe.servingPortions > 1) {
-                            setRecipe(recipe => ({ ...recipe, servingPortions: recipe.servingPortions - 1 }));
+                            dispatch({ type: 'DECREASE_SERVING_PORTIONS' });
                         }
                     }}
                     decreaseDisabled={recipe.servingPortions < 2}
                     onIncrease={(e) => {
                         e.preventDefault();
-                        setRecipe(recipe => ({ ...recipe, servingPortions: recipe.servingPortions + 1 }));
+                        dispatch({ type: 'INCREASE_SERVING_PORTIONS' });
                     }}
                 >
                     {recipe.servingPortions}
