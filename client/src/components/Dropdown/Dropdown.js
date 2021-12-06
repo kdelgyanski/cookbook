@@ -1,10 +1,14 @@
 import React from 'react';
 
+import { TextField } from '../TextField';
+
 const Dropdown = ({
     id,
+    className,
     defaultValue,
     options,
-    onChange
+    onChange,
+    readOnly
 }) => {
 
     const dropdownRef = React.useRef(null);
@@ -31,10 +35,22 @@ const Dropdown = ({
         setIsOpen(open => !open);
     };
 
+    if (readOnly) {
+        return (
+            <TextField
+                id={id}
+                className={`dropdown-readonly ${className}`}
+                readOnly
+            >
+                {defaultValue}
+            </TextField>
+        );
+    }
+
     return (
         <div
             id={id}
-            className='dropdown'
+            className={`dropdown ${className}`}
             ref={dropdownRef}
         >
             <button

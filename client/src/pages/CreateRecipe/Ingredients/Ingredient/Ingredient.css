@@ -1,0 +1,8 @@
+.ingredient {
+    display: flex;
+    list-style: none;
+}
+
+.ingredient .ingredient-item {
+    margin-right: 5px;
+}
