@@ -4,3 +4,4 @@ export { Card } from './Card';
 export { Panel } from './Panel';
 export { ErrorModal } from './ErrorModal';
 export { Counter } from './Counter';
+export { Dropdown } from './Dropdown';

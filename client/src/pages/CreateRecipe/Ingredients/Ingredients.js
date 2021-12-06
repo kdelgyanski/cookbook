@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField } from '../../../components';
+import { TextField, Dropdown } from '../../../components';
 
 const Ingredients = ({
     ingredients,
@@ -60,13 +60,12 @@ const Ingredient = ({
             >
                 {ingredient.quantity}
             </TextField>
-            <TextField
+            <Dropdown
                 id={(value && `ingredient-${value.name}-units`) || 'ingredient-unit-new'}
-                readOnly={readOnly}
+                defaultValue={ingredient.units || 'Units'}
+                options={['gram', 'kg', 'liter', 'milliliter', 'tbsp', 'tsp']}
                 onChange={units => setIngredient({ ...ingredient, units: units })}
-            >
-                {ingredient.units}
-            </TextField>
+            />
             {!readOnly && <button
                 className='btn btn-primary'
                 onClick={(e) => {
