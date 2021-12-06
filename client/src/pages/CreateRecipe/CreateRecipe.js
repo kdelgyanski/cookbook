@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 // import * as recipeService from '../../services/recipeService';
 
-import { TextField, Counter } from '../../components';
+import { TextField, Counter, Dropdown } from '../../components';
 import { Ingredients } from './Ingredients';
 
 
@@ -21,6 +21,12 @@ const reducer = (recipe, action) => {
             break;
         case 'ADD_INGREDIENT':
             newRecipe = { ...recipe, ingredients: [...recipe.ingredients, action.payload] }
+            break;
+        case 'CHANGE_COURSE':
+            newRecipe = { ...recipe, course: action.payload }
+            break;
+        case 'CHANGE_DIFFICULTY':
+            newRecipe = { ...recipe, difficulty: action.payload }
             break;
         default:
             newRecipe = { ...recipe };
@@ -77,6 +83,20 @@ const CreateRecipe = () => {
                 <Ingredients
                     ingredients={recipe.ingredients}
                     onAddIngredient={ingredient => addIngredientHandler(ingredient)}
+                />
+                <Dropdown
+                    id='course'
+                    defaultValue=''
+                    label='Course'
+                    options={['main', 'soup', 'salad', 'dessert']}
+                    onChange={selected => dispatch({ type: 'CHANGE_COURSE', payload: selected })}
+                />
+                <Dropdown
+                    id='difficulty'
+                    defaultValue=''
+                    label='Difficulty'
+                    options={['easy', 'intermediate', 'advanced']}
+                    onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
                 />
                 <button className='btn btn-primary'>Add</button>
             </form>

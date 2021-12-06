@@ -8,7 +8,8 @@ const Dropdown = ({
     defaultValue,
     options,
     onChange,
-    readOnly
+    readOnly,
+    label
 }) => {
 
     const dropdownRef = React.useRef(null);
@@ -48,41 +49,49 @@ const Dropdown = ({
     }
 
     return (
-        <div
-            id={id}
-            className={`dropdown ${className}`}
-            ref={dropdownRef}
-        >
-            <button
-                className='btn btn-primary dropdown-toggle'
-                type='button'
-                id='dropdownMenuButton'
-                data-toggle='dropdown'
-                aria-haspopup='true'
-                aria-expanded={isOpen ? 'true' : 'false'}
-                onClick={toggleDropdown}
+        <>
+            {label && <label
+                id={`${id}-label`}
+                htmlFor={id}
             >
-                {selected}
-            </button>
+                {label}
+            </label>}
             <div
-                className={`dropdown-menu ${isOpen ? 'show' : ''}`}
-                aria-labelledby='dropdownMenuButton'
+                id={id}
+                className={`dropdown ${className}`}
+                ref={dropdownRef}
             >
-                {options.map(o =>
-                    <span
-                        key={o}
-                        className='dropdown-item'
-                        onClick={(e) => {
-                            setSelected(o);
-                            onChange(o)
-                            setIsOpen(false);
-                        }}
-                    >
-                        {o}
-                    </span>
-                )}
+                <button
+                    className='btn btn-primary dropdown-toggle'
+                    type='button'
+                    id='dropdownMenuButton'
+                    data-toggle='dropdown'
+                    aria-haspopup='true'
+                    aria-expanded={isOpen ? 'true' : 'false'}
+                    onClick={toggleDropdown}
+                >
+                    {selected}
+                </button>
+                <div
+                    className={`dropdown-menu ${isOpen ? 'show' : ''}`}
+                    aria-labelledby='dropdownMenuButton'
+                >
+                    {options.map(o =>
+                        <span
+                            key={o}
+                            className='dropdown-item'
+                            onClick={(e) => {
+                                setSelected(o);
+                                onChange(o)
+                                setIsOpen(false);
+                            }}
+                        >
+                            {o}
+                        </span>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -38,7 +38,7 @@ const Ingredient = ({
             <Dropdown
                 id={(value && `ingredient-${value.name}-units`) || 'ingredient-unit-new'}
                 defaultValue={ingredient.units || 'Units'}
-                options={['gram', 'kg', 'liter', 'milliliter', 'tbsp', 'tsp']}
+                options={['gram', 'kilogram', 'milliliter', 'liter', 'tbsp', 'tsp', 'to taste', 'pieces']}
                 onChange={units => setIngredient({ ...ingredient, units: units })}
                 className='ingredient-item'
                 readOnly={readOnly}
