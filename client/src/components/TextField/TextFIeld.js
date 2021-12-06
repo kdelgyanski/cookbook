@@ -5,7 +5,8 @@ const TextField = ({
     children,
     placeholder,
     label,
-    type
+    type,
+    readOnly
 }) => {
     return (
         <>
@@ -23,6 +24,7 @@ const TextField = ({
                 placeholder={placeholder}
                 value={children}
                 onChange={onChange && ((e) => onChange(e.target.value))}
+                readOnly={readOnly}
             />
         </>
     );

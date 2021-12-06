@@ -3,6 +3,7 @@ import AuthContext from '../../context/AuthContext';
 // import * as recipeService from '../../services/recipeService';
 
 import { TextField, Counter } from '../../components';
+import { Ingredients } from './Ingredients';
 
 
 const reducer = (recipe, action) => {
@@ -18,6 +19,9 @@ const reducer = (recipe, action) => {
         case 'DECREASE_SERVING_PORTIONS':
             newRecipe = { ...recipe, servingPortions: recipe.servingPortions - 1 }
             break;
+        case 'ADD_INGREDIENT':
+            newRecipe = { ...recipe, ingredients: [...recipe.ingredients, action.payload] }
+            break;
         default:
             newRecipe = { ...recipe };
     };
@@ -28,7 +32,7 @@ const reducer = (recipe, action) => {
 const CreateRecipe = () => {
 
     const auth = useContext(AuthContext);
-    const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1 });
+    const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1, ingredients: [] });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,6 +42,12 @@ const CreateRecipe = () => {
         console.log(recipe);
 
     };
+
+    const addIngredientHandler = ingredient => {
+        console.log('Add ingredient');
+
+        dispatch({ type: 'ADD_INGREDIENT', payload: ingredient });
+    }
 
     return (
         <div className='container app-page'>
@@ -64,6 +74,10 @@ const CreateRecipe = () => {
                 >
                     {recipe.servingPortions}
                 </Counter>
+                <Ingredients
+                    ingredients={recipe.ingredients}
+                    onAddIngredient={ingredient => addIngredientHandler(ingredient)}
+                />
                 <button className='btn btn-primary'>Add</button>
             </form>
         </div>
