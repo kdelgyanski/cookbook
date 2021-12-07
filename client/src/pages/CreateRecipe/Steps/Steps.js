@@ -1,6 +1,8 @@
 import React from 'react';
 import { TextField } from '../../../components';
 
+import './Steps.css';
+
 const Steps = ({
     steps,
     onAddStep
@@ -13,12 +15,12 @@ const Steps = ({
         <div>
             <h2>Steps</h2>
             <ul className='steps'>
-                {steps && steps.length > 0 && steps.map((s, i) => <li key={i}>{s}</li>)}
-                {shouldRenderNewStep && <li>
+                {steps && steps.length > 0 && steps.map((s, i) => <li className='step' key={i}>{s}</li>)}
+                {shouldRenderNewStep && <li className='step'>
                     <TextField
                         id={'step-new'}
                         onChange={value => setStep(value)}
-                        className='step'
+                        placeholder='describe the next step'
                         isLarge
                     >
                         {step}
@@ -31,6 +33,7 @@ const Steps = ({
                             setShouldRenderNewStep(false);
                             setStep('');
                         }}
+                        disabled={!step || step === ''}
                     >
                         Done
                     </button>

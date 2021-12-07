@@ -1,6 +1,8 @@
 .ingredient {
     display: flex;
     list-style: none;
+    max-height: 2.5em;
+    align-items: center;
 }
 
 .ingredient .ingredient-item {

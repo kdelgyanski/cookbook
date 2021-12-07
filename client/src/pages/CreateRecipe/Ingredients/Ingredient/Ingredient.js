@@ -49,6 +49,7 @@ const Ingredient = ({
                     e.preventDefault();
                     onAddIngredient(ingredient);
                 }}
+                disabled={ingredient.name === '' || ingredient.quantity === '' || ingredient.units === ''}
             >
                 Done
             </button>}
