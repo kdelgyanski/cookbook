@@ -6,7 +6,8 @@ const TextField = ({
     placeholder,
     label,
     type,
-    readOnly
+    readOnly,
+    isLarge
 }) => {
     return (
         <>
@@ -16,16 +17,27 @@ const TextField = ({
             >
                 {label}
             </label>}
-            <input
-                id={id}
-                className={`form-control ${className}`}
-                name={`${id}-name`}
-                type={type ? type : 'text'}
-                placeholder={placeholder}
-                value={children}
-                onChange={onChange && ((e) => onChange(e.target.value))}
-                readOnly={readOnly}
-            />
+            {!isLarge
+                ? <input
+                    id={id}
+                    className={`form-control ${className}`}
+                    name={`${id}-name`}
+                    type={type ? type : 'text'}
+                    placeholder={placeholder}
+                    value={children}
+                    onChange={onChange && ((e) => onChange(e.target.value))}
+                    readOnly={readOnly}
+                />
+                : <textarea
+                    id={id}
+                    className={`form-control ${className}`}
+                    name={`${id}-name`}
+                    placeholder={placeholder}
+                    value={children}
+                    onChange={onChange && ((e) => onChange(e.target.value))}
+                    readOnly={readOnly}
+                />
+            }
         </>
     );
 };

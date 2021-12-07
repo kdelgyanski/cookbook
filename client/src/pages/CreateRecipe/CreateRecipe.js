@@ -4,6 +4,7 @@ import AuthContext from '../../context/AuthContext';
 
 import { TextField, Counter, Dropdown } from '../../components';
 import { Ingredients } from './Ingredients';
+import { Steps } from './Steps';
 
 
 const reducer = (recipe, action) => {
@@ -21,6 +22,9 @@ const reducer = (recipe, action) => {
             break;
         case 'ADD_INGREDIENT':
             newRecipe = { ...recipe, ingredients: [...recipe.ingredients, action.payload] }
+            break;
+        case 'ADD_STEP':
+            newRecipe = { ...recipe, steps: [...recipe.steps, action.payload] }
             break;
         case 'CHANGE_COURSE':
             newRecipe = { ...recipe, course: action.payload }
@@ -44,7 +48,7 @@ const reducer = (recipe, action) => {
 const CreateRecipe = () => {
 
     const auth = useContext(AuthContext);
-    const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1, ingredients: [] });
+    const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1, ingredients: [], steps: [] });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,6 +63,12 @@ const CreateRecipe = () => {
         console.log('Add ingredient');
 
         dispatch({ type: 'ADD_INGREDIENT', payload: ingredient });
+    }
+
+    const addStepHandler = step => {
+        console.log('Add step');
+
+        dispatch({ type: 'ADD_STEP', payload: step });
     }
 
     return (
@@ -89,6 +99,10 @@ const CreateRecipe = () => {
                 <Ingredients
                     ingredients={recipe.ingredients}
                     onAddIngredient={ingredient => addIngredientHandler(ingredient)}
+                />
+                <Steps
+                    steps={recipe.steps}
+                    onAddStep={step => addStepHandler(step)}
                 />
                 <Dropdown
                     id='course'

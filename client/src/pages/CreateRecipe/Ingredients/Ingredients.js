@@ -27,7 +27,6 @@ const Ingredients = ({
                     +
                 </button>}
             </ul>
-
         </div>
     );
 };
