@@ -3,3 +3,8 @@
     font-style: italic;
     font-weight: normal;
 }
+
+.bubble .delete-btn {
+    margin-left: 10px;
+    cursor: pointer;
+}

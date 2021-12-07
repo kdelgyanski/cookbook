@@ -1,0 +1,13 @@
+.dropdown {
+    margin: 1em 0;
+}
+
+.dropdown .dropdown-labels {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+}
+
+.dropdown .dropdown-labels .dropdown-label {
+    margin-right: 10px;
+}

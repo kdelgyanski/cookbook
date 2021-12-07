@@ -3,6 +3,8 @@ import React from 'react';
 import { TextField } from '../TextField';
 import { Badge } from '../Badge';
 
+import './Dropdown.css';
+
 const Dropdown = ({
     id,
     className,
@@ -109,8 +111,19 @@ const Dropdown = ({
                 </div>
                 {withBadges && selected.length > 0 && <div className='dropdown-labels'>
                     {multiselect
-                        ? selected.map(l => <Badge key={l}>{l}</Badge>)
-                        : <Badge>{selected}</Badge>}
+                        ? selected.map(l =>
+                            <Badge
+                                className='dropdown-label'
+                                key={l}
+                                onDelete={() => {
+                                    const newSelection = selected.filter(item => item !== l);
+                                    setSelected(newSelection);
+                                }}
+                            >
+                                {l}
+                            </Badge>
+                        )
+                        : <Badge className='dropdown-label'>{selected}</Badge>}
                 </div>}
             </div>
         </>
