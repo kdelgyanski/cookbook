@@ -32,6 +32,7 @@ const Ingredient = ({
                 onChange={quantity => setIngredient({ ...ingredient, quantity: quantity })}
                 className='ingredient-item'
                 placeholder='quantity'
+                onlyNumbers
             >
                 {ingredient.quantity}
             </TextField>

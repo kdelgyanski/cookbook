@@ -1,3 +1,5 @@
+import React from 'react';
+
 const TextField = ({
     id,
     className,
@@ -7,8 +9,24 @@ const TextField = ({
     label,
     type,
     readOnly,
-    isLarge
+    isLarge,
+    onlyNumbers,
+    format
 }) => {
+
+    const [value, setValue] = React.useState(children || '');
+
+    const handleChange = e => {
+        const newValue = e.target.value;
+
+        if (onlyNumbers && !checkContainsOnlyDigits(newValue)) {
+            return;
+        }
+
+        setValue(newValue)
+        onChange(newValue);
+    };
+
     return (
         <>
             {label && <label
@@ -24,8 +42,8 @@ const TextField = ({
                     name={`${id}-name`}
                     type={type ? type : 'text'}
                     placeholder={placeholder}
-                    value={children}
-                    onChange={onChange && ((e) => onChange(e.target.value))}
+                    value={value}
+                    onChange={handleChange}
                     readOnly={readOnly}
                 />
                 : <textarea
@@ -33,13 +51,17 @@ const TextField = ({
                     className={`form-control ${className}`}
                     name={`${id}-name`}
                     placeholder={placeholder}
-                    value={children}
-                    onChange={onChange && ((e) => onChange(e.target.value))}
+                    value={value}
+                    onChange={handleChange}
                     readOnly={readOnly}
                 />
             }
         </>
     );
 };
+
+function checkContainsOnlyDigits(str) {
+    return /^\d*$/.test(str);
+}
 
 export default TextField;

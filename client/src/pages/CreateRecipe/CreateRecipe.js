@@ -14,6 +14,12 @@ const reducer = (recipe, action) => {
         case 'CHANGE_TITLE':
             newRecipe = { ...recipe, title: action.payload }
             break;
+        case 'CHANGE_PREPARATION_TIME':
+            newRecipe = { ...recipe, preparationTime: action.payload }
+            break;
+        case 'CHANGE_TIME_TO_COOK':
+            newRecipe = { ...recipe, timeToCook: action.payload }
+            break;
         case 'INCREASE_SERVING_PORTIONS':
             newRecipe = { ...recipe, servingPortions: recipe.servingPortions + 1 }
             break;
@@ -78,6 +84,18 @@ const CreateRecipe = () => {
                     id='title'
                     label='Title'
                     onChange={(value) => dispatch({ type: 'CHANGE_TITLE', payload: value })}
+                />
+                <TextField
+                    id='preparationTime'
+                    label='Preparation Time'
+                    onChange={value => dispatch({ type: 'CHANGE_PREPARATION_TIME', payload: value })}
+                    onlyNumbers
+                />
+                <TextField
+                    id='timeToCook'
+                    label='Time to cook'
+                    onChange={value => dispatch({ type: 'CHANGE_TIME_TO_COOK', payload: value })}
+                    onlyNumbers
                 />
                 <Counter
                     id='serving-portions'
