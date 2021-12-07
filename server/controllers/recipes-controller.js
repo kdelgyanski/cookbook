@@ -141,6 +141,7 @@ const create = async (req, res, next) => {
     });
 
     try {
+        console.log(recipe);
         const session = await mongoose.startSession();
         session.startTransaction();
         await recipe.save({ session: session });
@@ -148,6 +149,7 @@ const create = async (req, res, next) => {
         await author.save({ session: session });
         await session.commitTransaction();
     } catch (err) {
+        console.log(err);
         return next(new HttpError('Something went wrong! Could not create recipe! Please try again later!', 500));
     }
 
