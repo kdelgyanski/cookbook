@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
-// import * as recipeService from '../../services/recipeService';
+import * as recipeService from '../../services/recipeService';
 
 import { TextField, Counter, Dropdown } from '../../components';
 import { Ingredients } from './Ingredients';
 import { Steps } from './Steps';
-
 
 const reducer = (recipe, action) => {
     let newRecipe;
@@ -47,6 +47,7 @@ const reducer = (recipe, action) => {
 
 const CreateRecipe = () => {
 
+    const navigate = useNavigate();
     const auth = useContext(AuthContext);
     const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1, ingredients: [], steps: [] });
 
@@ -57,19 +58,18 @@ const CreateRecipe = () => {
         console.log('api call goes here');
         console.log(recipe);
 
+        let result;
+        try {
+            result = await recipeService.create(recipe);
+        } catch (err) {
+            console.log(err);
+        }
+
+        if (result) {
+            navigate(`/${auth.userId}/my-kitchen`);
+        }
+
     };
-
-    const addIngredientHandler = ingredient => {
-        console.log('Add ingredient');
-
-        dispatch({ type: 'ADD_INGREDIENT', payload: ingredient });
-    }
-
-    const addStepHandler = step => {
-        console.log('Add step');
-
-        dispatch({ type: 'ADD_STEP', payload: step });
-    }
 
     return (
         <div className='container app-page'>
@@ -98,11 +98,11 @@ const CreateRecipe = () => {
                 </Counter>
                 <Ingredients
                     ingredients={recipe.ingredients}
-                    onAddIngredient={ingredient => addIngredientHandler(ingredient)}
+                    onAddIngredient={ingredient => dispatch({ type: 'ADD_INGREDIENT', payload: ingredient })}
                 />
                 <Steps
                     steps={recipe.steps}
-                    onAddStep={step => addStepHandler(step)}
+                    onAddStep={step => dispatch({ type: 'ADD_STEP', payload: step })}
                 />
                 <Dropdown
                     id='course'
