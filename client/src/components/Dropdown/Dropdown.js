@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { TextField } from '../TextField';
+import { Badge } from '../Badge';
 
 const Dropdown = ({
     id,
@@ -10,7 +11,8 @@ const Dropdown = ({
     onChange,
     readOnly,
     label,
-    multiselect
+    multiselect,
+    withBadges
 }) => {
 
     const dropdownRef = React.useRef(null);
@@ -51,7 +53,7 @@ const Dropdown = ({
 
     return (
         <>
-            {label && <label
+            {!withBadges && label && <label
                 id={`${id}-label`}
                 htmlFor={id}
             >
@@ -71,7 +73,9 @@ const Dropdown = ({
                     aria-expanded={isOpen ? 'true' : 'false'}
                     onClick={toggleDropdown}
                 >
-                    {multiselect && selected.length > 1 ? selected.join(', ') : selected}
+                    {withBadges
+                        ? label
+                        : multiselect && selected.length > 1 ? selected.join(', ') : selected}
                 </button>
                 <div
                     className={`dropdown-menu ${isOpen ? 'show' : ''}`}
@@ -103,6 +107,11 @@ const Dropdown = ({
                         </span>
                     )}
                 </div>
+                {withBadges && selected.length > 0 && <div className='dropdown-labels'>
+                    {multiselect
+                        ? selected.map(l => <Badge key={l}>{l}</Badge>)
+                        : <Badge>{selected}</Badge>}
+                </div>}
             </div>
         </>
     );

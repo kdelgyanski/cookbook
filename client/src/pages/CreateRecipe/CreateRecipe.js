@@ -96,6 +96,7 @@ const CreateRecipe = () => {
                     label='Course'
                     options={['main', 'soup', 'salad', 'dessert']}
                     onChange={selected => dispatch({ type: 'CHANGE_COURSE', payload: selected })}
+                    withBadges
                 />
                 <Dropdown
                     id='difficulty'
@@ -103,6 +104,7 @@ const CreateRecipe = () => {
                     label='Difficulty'
                     options={['easy', 'intermediate', 'advanced']}
                     onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
+                    withBadges
                 />
                 <Dropdown
                     id='seasonal'
@@ -111,6 +113,7 @@ const CreateRecipe = () => {
                     options={['spring', 'summer', 'autumn', 'winter']}
                     onChange={selected => dispatch({ type: 'CHANGE_SEASONAL', payload: selected })}
                     multiselect
+                    withBadges
                 />
                 <Dropdown
                     id='category'
@@ -129,6 +132,7 @@ const CreateRecipe = () => {
                     ]}
                     onChange={selected => dispatch({ type: 'CHANGE_CATEGORY', payload: selected })}
                     multiselect
+                    withBadges
                 />
                 <button className='btn btn-primary'>Add</button>
             </form>
