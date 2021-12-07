@@ -28,6 +28,12 @@ const reducer = (recipe, action) => {
         case 'CHANGE_DIFFICULTY':
             newRecipe = { ...recipe, difficulty: action.payload }
             break;
+        case 'CHANGE_SEASONAL':
+            newRecipe = { ...recipe, seasonal: action.payload }
+            break;
+        case 'CHANGE_CATEGORY':
+            newRecipe = { ...recipe, category: action.payload }
+            break;
         default:
             newRecipe = { ...recipe };
     };
@@ -97,6 +103,32 @@ const CreateRecipe = () => {
                     label='Difficulty'
                     options={['easy', 'intermediate', 'advanced']}
                     onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
+                />
+                <Dropdown
+                    id='seasonal'
+                    defaultValue=''
+                    label='Seasonal'
+                    options={['spring', 'summer', 'autumn', 'winter']}
+                    onChange={selected => dispatch({ type: 'CHANGE_SEASONAL', payload: selected })}
+                    multiselect
+                />
+                <Dropdown
+                    id='category'
+                    defaultValue=''
+                    label='Category'
+                    options={[
+                        'pork',
+                        'chicken',
+                        'fish',
+                        'beef',
+                        'vegetarian',
+                        'vegan',
+                        'sweet',
+                        'asian',
+                        'mediterranean'
+                    ]}
+                    onChange={selected => dispatch({ type: 'CHANGE_CATEGORY', payload: selected })}
+                    multiselect
                 />
                 <button className='btn btn-primary'>Add</button>
             </form>

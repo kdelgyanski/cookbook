@@ -9,7 +9,8 @@ const Dropdown = ({
     options,
     onChange,
     readOnly,
-    label
+    label,
+    multiselect
 }) => {
 
     const dropdownRef = React.useRef(null);
@@ -70,7 +71,7 @@ const Dropdown = ({
                     aria-expanded={isOpen ? 'true' : 'false'}
                     onClick={toggleDropdown}
                 >
-                    {selected}
+                    {multiselect && selected.length > 1 ? selected.join(', ') : selected}
                 </button>
                 <div
                     className={`dropdown-menu ${isOpen ? 'show' : ''}`}
@@ -80,9 +81,21 @@ const Dropdown = ({
                         <span
                             key={o}
                             className='dropdown-item'
-                            onClick={(e) => {
-                                setSelected(o);
-                                onChange(o)
+                            onClick={() => {
+
+                                let newSelection;
+                                if (multiselect) {
+                                    if (selected.includes(o)) {
+                                        newSelection = selected.filter(item => item !== o);
+                                    } else {
+                                        newSelection = [...selected, o];
+                                    }
+                                } else {
+                                    newSelection = o;
+                                }
+
+                                setSelected(newSelection);
+                                onChange(newSelection);
                                 setIsOpen(false);
                             }}
                         >
