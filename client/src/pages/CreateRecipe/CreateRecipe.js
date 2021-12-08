@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import * as recipeService from '../../services/recipeService';
 
 import { TextField, Counter, Dropdown } from '../../components';
-import { Ingredients } from './Ingredients';
+import Ingredients from './Ingredients';
 import { Steps } from './Steps';
 
 const reducer = (recipe, action) => {
@@ -28,6 +28,14 @@ const reducer = (recipe, action) => {
             break;
         case 'ADD_INGREDIENT':
             newRecipe = { ...recipe, ingredients: [...recipe.ingredients, action.payload] }
+            break;
+        case 'DELETE_INGREDIENT':
+            newRecipe = {
+                ...recipe,
+                ingredients: recipe.ingredients.filter(i => i.name !== action.payload.name
+                    && i.quantity !== action.payload.quantity
+                    && i.units !== action.payload.units)
+            }
             break;
         case 'ADD_STEP':
             newRecipe = { ...recipe, steps: [...recipe.steps, action.payload] }
@@ -115,9 +123,11 @@ const CreateRecipe = () => {
                     {recipe.servingPortions}
                 </Counter>
                 <Ingredients
-                    ingredients={recipe.ingredients}
                     onAddIngredient={ingredient => dispatch({ type: 'ADD_INGREDIENT', payload: ingredient })}
-                />
+                    onDeleteIngredient={ingredient => dispatch({ type: 'DELETE_INGREDIENT', payload: ingredient })}
+                >
+                    {recipe.ingredients}
+                </Ingredients>
                 <Steps
                     steps={recipe.steps}
                     onAddStep={step => dispatch({ type: 'ADD_STEP', payload: step })}

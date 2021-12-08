@@ -1,0 +1,12 @@
+.create-ingredient {
+    display: flex;
+    list-style: none;
+    max-height: 2.5em;
+    align-items: center;
+    border: none;
+    padding: inherit;
+}
+
+.create-ingredient .ingredient-item {
+    margin-right: 5px;
+}

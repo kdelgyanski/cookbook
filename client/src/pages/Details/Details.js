@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
+import { Badge } from '../../components';
+import Ingredients from '../CreateRecipe/Ingredients';
 
 const Details = () => {
 
@@ -32,7 +34,7 @@ const Details = () => {
                 <div className='container recipe-header'>
                     <h2>{recipe.title}</h2>
                     <div className='labels'>
-                        {labels.map(l => <span key={l} className='badge rounded-pill bg-primary label'>{l}</span>)}
+                        {labels.map(l => <Badge key={l} >{l}</Badge>)}
                     </div>
                     <span>Preparation time: {recipe.preparationTime}</span>
                     <span>Time to cook: {recipe.timeToCook}</span>
@@ -40,13 +42,9 @@ const Details = () => {
 
                 <div className='container recipe-ingredients'>
                     <h2>{recipe.servingPortions}</h2>
-                    <ul className='ingredients'>
-                        {recipe.ingredients.map(i =>
-                            <li key={i.id} className='ingredient'>
-                                {i.name}: {i.quantity} {i.units}
-                            </li>
-                        )}
-                    </ul>
+                    <Ingredients>
+                        {recipe.ingredients}
+                    </Ingredients>
                 </div>
 
                 <img src={recipe.imageUrl || 'NOT_SET'} alt='' />
