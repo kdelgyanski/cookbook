@@ -12,7 +12,7 @@ const Ingredient = ({
         <li className='list-group-item ingredient'>
             {value.name} {value.quantity} {value.units}
             {onDeleteIngredient && <button
-                className='btn btn-primary'
+                className='btn btn-primary delete-ingredient-btn'
                 onClick={e => {
                     e.preventDefault();
                     onDeleteIngredient(value);

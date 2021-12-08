@@ -32,9 +32,7 @@ const reducer = (recipe, action) => {
         case 'DELETE_INGREDIENT':
             newRecipe = {
                 ...recipe,
-                ingredients: recipe.ingredients.filter(i => i.name !== action.payload.name
-                    && i.quantity !== action.payload.quantity
-                    && i.units !== action.payload.units)
+                ingredients: recipe.ingredients.filter(i => !areIngredientsEqual(i, action.payload))
             }
             break;
         case 'ADD_STEP':
@@ -180,6 +178,15 @@ const CreateRecipe = () => {
             </form>
         </div>
     );
+};
+
+
+const areIngredientsEqual = (original, toCompare) => {
+    return original.name === toCompare.name
+        && original.quantity === toCompare.quantity
+        && original.units === toCompare.units;
 }
+
+
 
 export default CreateRecipe;
