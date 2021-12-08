@@ -1,94 +1,77 @@
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import * as recipeService from '../../services/recipeService';
+
 const Details = () => {
 
-    const recipe = {
-        id: 1,
-        title: 'Pumpkin Pie',
-        preparationTime: '1 Hour',
-        timeToCook: '20 Minutes',
-        servingPortions: 8,
-        imageUrl: './images/pumpkin-pie.jpg',
-        type: 'Dessert',
-        seasonal: ['Fall'],
-        difficulty: ['Intermediate'],
-        category: ['Sweet'],
-        ingredients: [
-            { id: 1, name: 'pumpkin', quantity: '500', units: 'gram' },
-            { id: 2, name: 'egs', quantity: '2', units: 'pieces' },
-            { id: 3, name: 'sugar', quantity: '300', units: 'gram' },
-            { id: 4, name: 'flour', quantity: '500', units: 'gram' },
-            { id: 5, name: 'milk', quantity: '150', units: 'ml' },
-            { id: 6, name: 'vanila', quantity: '10', units: 'gram' },
-        ],
-        steps: [
-            { id: 1, title: 'First step', description: 'Bla bla ajskfkasfhgkasksajfkjashfkashfk' },
-            { id: 2, title: 'Second step', description: 'Bla bla ajskfkasfhgkasksajfkjashfkashfk' },
-            { id: 3, title: 'Third step', description: 'Bla bla ajskfkasfhgkasksajfkjashfkashfk' },
-        ]
-    }
+    const [recipe, setRecipe] = React.useState(null);
+    const [labels, setLabels] = React.useState([])
 
-    const {
-        title,
-        preparationTime,
-        timeToCook,
-        ingredients,
-        servingPortions,
-        imageUrl,
-        steps,
-        type,
-        difficulty,
-        category,
-        seasonal
-    } = recipe;
+    const recipeId = useParams().id;
 
-    const labels = [type, ...category, ...difficulty, ...seasonal];
+    React.useEffect(() => {
+        const getRecipe = async () => {
+
+            try {
+                const response = await recipeService.getById(recipeId);
+                setRecipe(response);
+                setLabels([response.type, ...response.category, response.difficulty, ...response.seasonal]);
+            } catch (err) {
+                console.log(err);
+            }
+
+        };
+
+        getRecipe();
+    }, [recipeId]);
 
     return (
-        <div className='container app-page'>
+        <>
+            {recipe && <div className='container app-page'>
 
-            <div className='container recipe-header'>
-                <h2>{title}</h2>
-                <div className='labels'>
-                    {labels.map(l => <span key={l} className='badge rounded-pill bg-primary label'>{l}</span>)}
+                <div className='container recipe-header'>
+                    <h2>{recipe.title}</h2>
+                    <div className='labels'>
+                        {labels.map(l => <span key={l} className='badge rounded-pill bg-primary label'>{l}</span>)}
+                    </div>
+                    <span>Preparation time: {recipe.preparationTime}</span>
+                    <span>Time to cook: {recipe.timeToCook}</span>
                 </div>
-                <span>Preparation time: {preparationTime}</span>
-                <span>Time to cook: {timeToCook}</span>
-            </div>
 
-            <div className='container recipe-ingredients'>
-                <h2>{servingPortions}</h2>
-                <ul className='ingredients'>
-                    {ingredients.map(i =>
-                        <li key={i.id} className='ingredient'>
-                            {i.name}: {i.quantity} {i.units}
-                        </li>
-                    )}
-                </ul>
-            </div>
-
-            <img src={imageUrl} alt='' />
-
-            <div className='container steps'>
-
-                <div className="accordion">
-                    {steps.map((step, i) =>
-                        <Step
-                            key={step.id}
-                            number={i}
-                            title={step.title}
-                            description={step.description}
-                        />
-                    )}
+                <div className='container recipe-ingredients'>
+                    <h2>{recipe.servingPortions}</h2>
+                    <ul className='ingredients'>
+                        {recipe.ingredients.map(i =>
+                            <li key={i.id} className='ingredient'>
+                                {i.name}: {i.quantity} {i.units}
+                            </li>
+                        )}
+                    </ul>
                 </div>
-            </div>
 
-        </div>
+                <img src={recipe.imageUrl || 'NOT_SET'} alt='' />
+
+                <div className='container steps'>
+
+                    <div className="accordion">
+                        {recipe.steps.map((step, i) =>
+                            <Step
+                                key={i}
+                                number={i}
+                                description={step}
+                            />
+                        )}
+                    </div>
+                </div>
+
+            </div>}
+        </>
     );
 }
 
 const Step = ({
     id,
     number,
-    title,
     description
 }) => {
     return (
@@ -102,7 +85,7 @@ const Step = ({
                     aria-expanded='true'
                     aria-controls={`step-description-${id}`}
                 >
-                    Step #{number}: {title}
+                    Step #{number}
                 </button>
             </h2>
             <div
