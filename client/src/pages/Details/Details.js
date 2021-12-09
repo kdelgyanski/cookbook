@@ -97,7 +97,7 @@ const Step = ({
             </div>
         </div>
     );
-}
+};
 
 
 export default Details;

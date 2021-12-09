@@ -7,20 +7,11 @@ import './App.css';
 import { Home, Details, Search, Login, MyKitchen, CreateRecipe } from './pages';
 
 import AuthContext from './context/AuthContext';
+import { useAuth } from './hooks';
 
 function App() {
-    const [token, setToken] = React.useState(null);
-    const [userId, setUserId] = React.useState(null);
 
-    const login = (userId, token) => {
-        setToken(token);
-        setUserId(userId);
-    };
-
-    const logout = () => {
-        setToken(null);
-        setUserId(null);
-    };
+    const { userId, token, login, logout } = useAuth();
 
     return (
         <AuthContext.Provider value={{
