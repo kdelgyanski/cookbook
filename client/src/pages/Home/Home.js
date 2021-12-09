@@ -1,21 +1,41 @@
 import React from 'react';
 import { Card, TextField, Panel } from '../../components';
+import * as recipeService from '../../services/recipeService';
 
 const Home = () => {
 
-    const weeklyTopMainDishes = [
-        { id: 1, title: 'Grilled Chicken Fillet', imgUrl: 'grilled-chicken-fillet.jpg' },
-        { id: 2, title: 'Backed Salmon', imgUrl: 'salmon.jpg' },
-        { id: 3, title: 'Pasta with meatballs', imgUrl: 'pasta-with-meatballs.jpeg' },
-    ];
+    const [recipes, setRecipes] = React.useState([]);
+    const [seasonalTop, setSeasonalTop] = React.useState([]);
 
-    const seasonalTop = [
-        { id: 11, title: 'Creamy Vegan Pumpkin Soup', imgUrl: 'creamy-vegan-pumpkin-soup.jpg' },
-        { id: 12, title: 'Oven Baked Feta Pasta', imgUrl: 'oven-baked-feta-pasta.jpg' },
-        { id: 13, title: 'Pumpkin Pie', imgUrl: 'pumpkin-pie.jpg' },
-        { id: 14, title: 'Slow Cooked Pork', imgUrl: 'slow-cooked-pork.jpg' },
-        { id: 15, title: 'Slow Cooked Beef', imgUrl: 'slow-cooker-beef.jpg' },
-    ];
+    React.useEffect(() => {
+
+        const fetchAllRecipes = async () => {
+            try {
+                const response = await recipeService.getAll();
+                setRecipes(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchAllRecipes();
+
+    }, []);
+
+    React.useEffect(() => {
+
+        const fetchSeasonalRecipes = async () => {
+            try {
+                const response = await recipeService.getAllSeasonal(['autumn']);
+                setSeasonalTop(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchSeasonalRecipes();
+
+    }, []);
 
     const [searchValue, setSearchValue] = React.useState('');
 
@@ -35,7 +55,7 @@ const Home = () => {
                 maxVisibleItems={3}
                 title='Pick of the week'
             >
-                {weeklyTopMainDishes.map(mainDish =>
+                {recipes.map(mainDish =>
 
                     <Card
                         id={mainDish.id}

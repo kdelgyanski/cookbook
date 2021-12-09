@@ -3,6 +3,8 @@ const RECIPES_PATH = '/recipes';
 
 export const getAll = async () => await get(`${BASE_URL}${RECIPES_PATH}`);
 
+export const getAllSeasonal = async (seasons) => await get(`${BASE_URL}${RECIPES_PATH}?` + new URLSearchParams({ seasonal: seasons }));
+
 export const getById = async (id) => await get(`${BASE_URL}${RECIPES_PATH}/${id}`);
 
 export const getByAuthorId = async (authorId) => await get(`${BASE_URL}${RECIPES_PATH}/user/${authorId}`);
