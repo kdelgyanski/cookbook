@@ -9,11 +9,12 @@ export const getById = async (id) => await get(`${BASE_URL}${RECIPES_PATH}/${id}
 
 export const getByAuthorId = async (authorId) => await get(`${BASE_URL}${RECIPES_PATH}/user/${authorId}`);
 
-export const create = async (recipe) => {
+export const create = async (recipe, token) => {
     const response = await fetch(`${BASE_URL}${RECIPES_PATH}`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(recipe)
     });

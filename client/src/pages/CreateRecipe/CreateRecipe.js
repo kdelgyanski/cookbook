@@ -66,13 +66,9 @@ const CreateRecipe = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // TODO: call api
-        console.log('api call goes here');
-        console.log(recipe);
-
         let result;
         try {
-            result = await recipeService.create(recipe);
+            result = await recipeService.create(recipe, auth.token);
         } catch (err) {
             console.log(err);
         }
