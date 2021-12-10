@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import * as recipeService from '../../services/recipeService';
 
-import { TextField, Counter, Dropdown } from '../../components';
+import { TextField, Counter, Dropdown, ImagePicker } from '../../components';
 import Ingredients from './Ingredients';
 import { Steps } from './Steps';
 
@@ -13,6 +13,9 @@ const reducer = (recipe, action) => {
     switch (action.type) {
         case 'CHANGE_TITLE':
             newRecipe = { ...recipe, title: action.payload }
+            break;
+        case 'CHANGE_IMAGE':
+            newRecipe = { ...recipe, image: action.payload }
             break;
         case 'CHANGE_PREPARATION_TIME':
             newRecipe = { ...recipe, preparationTime: action.payload }
@@ -86,6 +89,10 @@ const CreateRecipe = () => {
                     id='title'
                     label='Title'
                     onChange={(value) => dispatch({ type: 'CHANGE_TITLE', payload: value })}
+                />
+                <ImagePicker
+                    id='recipe-image'
+                    onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
                 />
                 <TextField
                     id='preparationTime'

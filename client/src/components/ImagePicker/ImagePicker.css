@@ -1,0 +1,22 @@
+.image-picker {
+    width: 50%;
+    height: auto;
+}
+
+.image-picker .image-picker-input {
+    display:none;
+}
+
+.image-picker .preview-wrapper {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.preview-wrapper .delete-image-btn {
+    position: absolute;
+    top: 0;
+    left: 92%;
+    padding: 2px 4px;
+}
