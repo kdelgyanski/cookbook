@@ -18,7 +18,7 @@ const Card = ({
                 console.log('clicked on card');
                 handleClick();
             }}>
-            <img className='card-img-top card-image' src={`./images/${imgUrl}`} alt={title} />
+            <img className='card-img-top card-image' src={imgUrl} alt={title} />
             <div className='card-body'>
                 <h5 className='card-title'>{title}</h5>
             </div>

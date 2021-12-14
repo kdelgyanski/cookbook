@@ -47,7 +47,7 @@ const Details = () => {
                     </Ingredients>
                 </div>
 
-                <img src={recipe.imageUrl || 'NOT_SET'} alt='' />
+                <img src={`http://localhost:8000/${recipe.image}` || 'NOT_SET'} alt='' />
 
                 <div className='container steps'>
 

@@ -42,7 +42,6 @@ const MyKitchen = () => {
             {recipes.length === 0 && <h2>No recipes created yet!</h2>}
             {recipes.length > 0 && <Panel
                 className='my-recipes-panel'
-                maxVisibleItems={3}
                 title='My Recipes'
             >
                 {recipes.map(r =>
@@ -50,6 +49,7 @@ const MyKitchen = () => {
                         id={r.id}
                         key={r.title}
                         title={r.title}
+                        imgUrl={`http://localhost:8000/${r.image}`}
                     />)}
             </Panel>}
         </div>
