@@ -1,6 +1,7 @@
 const express = require('express');
 
 const auth = require('../middleware/auth');
+const imageUpload = require('../middleware/image-upload');
 
 const {
     getAll,
@@ -19,6 +20,6 @@ router.get('/user/:userId', getByAuthorId);
 
 router.use(auth);
 
-router.post('/', create);
+router.post('/', imageUpload.single('image'), create);
 
 module.exports = router;

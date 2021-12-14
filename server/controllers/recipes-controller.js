@@ -76,15 +76,16 @@ const create = async (req, res, next) => {
     const recipe = new Recipe({
         authorId,
         title: req.body.title,
+        image: req.file.path,
         timeToCook: req.body.timeToCook,
         preparationTime: req.body.preparationTime,
         servingPortions: req.body.servingPortions,
         course: req.body.course,
         difficulty: req.body.difficulty,
-        ingredients: req.body.ingredients,
-        steps: req.body.steps,
-        seasonal: req.body.seasonal,
-        category: req.body.category
+        ingredients: JSON.parse(req.body.ingredients),
+        steps: JSON.parse(req.body.steps),
+        seasonal: JSON.parse(req.body.seasonal),
+        category: JSON.parse(req.body.category)
     });
 
     try {

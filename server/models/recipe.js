@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const recipeSchema = new mongoose.Schema({
     title: { type: String, required: true },
     authorId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+    image: { type: String, required: false },
     timeToCook: { type: Number, required: true },
     preparationTime: { type: Number, required: true },
     servingPortions: { type: Number, required: true },
