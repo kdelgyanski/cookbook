@@ -1,7 +1,38 @@
+.app-panel {
+    background-color: #fee4ae;
+    border-radius: 5px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 0;
+    padding-bottom: 2em;
+    position: relative;
+}
+
+.app-panel .panel-title {
+    width: 100%;
+    background-color: #FDAB07;
+    color: #575965;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    padding: 0.3em;
+}
+
 .app-panel .panel-items{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
     margin: 1em 0 1em 0;
+}
+
+.app-panel .view-more-link {
+    color: #575965;
+    text-decoration: none;
+    padding-left: 0.5em;
+    position: absolute;
+    left: 85%;
+}
+
+.app-panel .view-more-link:hover {
+    text-decoration: underline;
 }

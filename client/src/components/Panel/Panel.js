@@ -16,7 +16,7 @@ const Panel = ({
             <div className='panel-items'>
                 {children.slice(0, maxVisibleItems)}
             </div>
-            {children.length > maxVisibleItems && <Link to={`${viewMoreUrl}`} >view more</Link>}
+            {children.length > maxVisibleItems && <Link className='view-more-link' to={`${viewMoreUrl}`} >View more</Link>}
         </div>
     );
 };
