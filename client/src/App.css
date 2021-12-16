@@ -3,6 +3,10 @@ body {
     background-color: #575965;
 }
 
+.list-group-item {
+    background-color: inherit;
+}
+
 .app-wrapper {
     display: flex;
     justify-content: center;
@@ -11,6 +15,8 @@ body {
 .content {
     position: absolute;
     top: 90px;
+    padding-top: 3em;
+    width: 100%;
 }
 
 .btn-primary {
@@ -31,9 +37,9 @@ body {
     border-color: #575965;
 }
 
-.btn-primary:focus {
+.btn-primary:focus, .btn-primary:active:focus {
     background-color: #FDAB07;
     color: #575965;
     border-color: #575965;
-    box-shadow: 0 0 0 0.25rem rgba(235, 171, 7, 0.5);
+    box-shadow: 0 0 0 0.15rem rgba(235, 171, 7, 0.25);
 }

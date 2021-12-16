@@ -10,6 +10,7 @@ const Ingredient = ({
 
     return (
         <li className='list-group-item ingredient'>
+            <img className='list-icon' src='./images/ingredient.svg' alt='bullet point for ingredient list item' />
             {value.name} {value.quantity} {value.units}
             {onDeleteIngredient && <button
                 className='btn btn-primary delete-ingredient-btn'

@@ -2,6 +2,8 @@
     font-size: 16px;
     font-style: italic;
     font-weight: normal;
+    background-color: #FDAB07;
+    color: #575965;
 }
 
 .bubble .delete-btn {

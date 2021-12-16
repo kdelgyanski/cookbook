@@ -1,0 +1,10 @@
+.text-field {
+    border-color: #FDAB07;
+    border-radius: 20px;
+}
+
+.text-field:active, .text-field:focus {
+    border-color: #FDAB07;
+    box-shadow: 0 0 0 0.15rem rgba(235, 171, 7, 0.25);
+    color: #575965;
+}

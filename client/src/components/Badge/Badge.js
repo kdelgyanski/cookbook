@@ -7,7 +7,7 @@ const Badge = ({
     onDelete
 }) => {
     return (
-        <span className={`badge rounded-pill bg-primary bubble ${className}`}>
+        <span className={`badge rounded-pill bubble ${className}`}>
             {children}
             {onDelete && <BsXCircle className='delete-btn' onClick={onDelete} />}
         </span>

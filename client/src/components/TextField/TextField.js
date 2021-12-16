@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './TextField.css';
+
 const TextField = ({
     id,
     className,
@@ -38,7 +40,7 @@ const TextField = ({
             {!isLarge
                 ? <input
                     id={id}
-                    className={`form-control ${className}`}
+                    className={`form-control text-field ${className}`}
                     name={`${id}-name`}
                     type={type ? type : 'text'}
                     placeholder={placeholder}
@@ -48,7 +50,7 @@ const TextField = ({
                 />
                 : <textarea
                     id={id}
-                    className={`form-control ${className}`}
+                    className={`form-control text-field ${className}`}
                     name={`${id}-name`}
                     placeholder={placeholder}
                     value={value}

@@ -4,8 +4,19 @@
     list-style: none;
     max-height: 2.5em;
     align-items: center;
+    color: #FDAB07;
+}
+
+.ingredient .list-icon {
+    max-height: 1.5em;
+    margin-right: 2em;
+    filter: invert(73%) sepia(92%) saturate(2265%) hue-rotate(356deg) brightness(101%) contrast(98%);
 }
 
 .ingredient .ingredient-item {
     margin-right: 5px;
+}
+
+.ingredient .delete-ingredient-btn {
+    margin-left: auto;
 }

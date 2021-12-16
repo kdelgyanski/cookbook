@@ -12,6 +12,8 @@
     width: 3em;
     font-size: 2rem;
     cursor: inherit;
+    background-color: inherit;
+    color: inherit;
 }
 
 .counter-value:focus-visible {
