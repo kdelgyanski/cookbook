@@ -1,0 +1,28 @@
+.app-header {
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    background-color: #FDAB07;
+    color: #575965;
+    display: flex;
+    align-items: center;
+}
+
+.app-header .nav {
+    justify-content: space-around;
+    align-items: center;
+    width: 100%
+}
+
+.app-header .nav .nav-link {
+    color: #575965;
+    font-size: larger;
+}
+
+.app-header .nav .nav-link.active{
+    border-bottom: 2px solid #575965;
+}
+
+.app-header .logo .logo-img {
+    height: 3em;
+}

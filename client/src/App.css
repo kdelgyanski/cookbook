@@ -1,0 +1,34 @@
+body {
+    color: #FDAB07;
+    background-color: #575965;
+}
+
+.content {
+    position: absolute;
+    top: 90px;
+}
+
+.btn-primary {
+    background-color: white;
+    color: #575965;
+    border-color: #575965;
+}
+
+.btn-primary:disabled, .btn-primary.disabled {
+    background-color: white;
+    color: #575965;
+    border-color: #575965;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background-color: #FDAB07;
+    color: #575965;
+    border-color: #575965;
+}
+
+.btn-primary:focus {
+    background-color: #FDAB07;
+    color: #575965;
+    border-color: #575965;
+    box-shadow: 0 0 0 0.25rem rgba(235, 171, 7, 0.5);
+}

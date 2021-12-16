@@ -21,7 +21,7 @@ function App() {
             login: login,
             logout: logout
         }}>
-            <div className='container app-wrapper'>
+            <div className='app-wrapper'>
                 <Header />
                 <main className='container content'>
                     <Routes>

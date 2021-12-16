@@ -1,8 +1,12 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
+import './Header.css';
+
 const Header = () => {
+
+    const location = useLocation();
 
     const auth = useContext(AuthContext);
 
@@ -21,14 +25,19 @@ const Header = () => {
         : navLinks.push({ name: 'Login', link: '/login' });
 
     return (
-        <header className='container py-3 text-center app-header'>
-            <h2 className='display-3'>This is the header</h2>
+        <header className='py-3 text-center app-header'>
             <nav className='nav'>
+                <Link
+                    to='/'
+                    className='nav-link logo'
+                >
+                    <img className='logo-img' src='./images/mish_mash_3.png' alt='logo' />
+                </Link>
                 {navLinks.map(navLink =>
                     <Link
                         key={navLink.name}
                         to={`${navLink.link}`}
-                        className='nav-link'
+                        className={`nav-link ${navLink.link !== '/' && location.pathname.includes(navLink.link) ? 'active' : ''}`}
                         onClick={navLink.onClick ? navLink.onClick : undefined}
                     >
                         {navLink.name}
