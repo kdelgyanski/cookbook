@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, TextField, Panel } from '../../components';
 import * as recipeService from '../../services/recipeService';
 
+import './Home.css';
+
 const Home = () => {
 
     const [recipes, setRecipes] = React.useState([]);
@@ -40,15 +42,19 @@ const Home = () => {
     const [searchValue, setSearchValue] = React.useState('');
 
     return (
-        <div className='container app-page'>
-            This is the Home Page
-            <TextField
-                id='search-input'
-                onChange={setSearchValue}
-                placeholder='Search for a recipe...'
-            >
-                {searchValue}
-            </TextField>
+        <div className='app-page'>
+
+            <div className='container jumbotron-container' >
+                <img className='img-fluid img-big-logo' src='./images/mish_mash_2.png' alt='Big Logo' />
+                <TextField
+                    id='search-input'
+                    className='search-bar'
+                    onChange={setSearchValue}
+                    placeholder='Search for a recipe...'
+                >
+                    {searchValue}
+                </TextField>
+            </div>
 
             <Panel
                 className='weekly-top-main-dishes-panel'

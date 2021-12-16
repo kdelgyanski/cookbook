@@ -23,7 +23,7 @@ function App() {
         }}>
             <div className='app-wrapper'>
                 <Header />
-                <main className='container content'>
+                <main className='content'>
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/search' element={<Search />} />

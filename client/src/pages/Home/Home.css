@@ -1,0 +1,17 @@
+.jumbotron-container {
+    margin-top: 3em;
+    margin-bottom: 2em;
+}
+
+.jumbotron-container .img-big-logo {
+    margin-bottom: 2em;
+    position: relative;
+    width: 60%;
+    left: 20%;
+}
+
+.jumbotron-container .search-bar {
+    width: 60%;
+    position: relative;
+    left: 20%;
+}
