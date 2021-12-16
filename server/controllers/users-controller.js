@@ -60,7 +60,7 @@ const signUp = async (req, res, next) => {
         return next(new HttpError('Something went wrong! Could not sign up!', 500));
     }
 
-    res.status(200).json({ userId: newUser.id, email: newUser.email, token: token });
+    res.status(200).json({ userId: newUser.id, username: newUser.username, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -99,7 +99,7 @@ const login = async (req, res, next) => {
         return next(new HttpError('Something went wrong! Could not sign up!', 500));
     }
 
-    res.status(200).json({ userId: existingUser.id, email: existingUser.email, token: token });
+    res.status(200).json({ userId: existingUser.id, username: existingUser.username, token: token });
 };
 
 exports.getAll = getAll;
