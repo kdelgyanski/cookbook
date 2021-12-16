@@ -11,13 +11,14 @@ import { useAuth } from './hooks';
 
 function App() {
 
-    const { userId, token, login, logout } = useAuth();
+    const { userId, username, token, login, logout } = useAuth();
 
     return (
         <AuthContext.Provider value={{
             isLoggedIn: !!token,
             token: token,
             userId: userId,
+            username: username,
             login: login,
             logout: logout
         }}>

@@ -8,11 +8,12 @@ const useAuth = () => {
     const [token, setToken] = React.useState(null);
     const [tokenExpirationDate, setTokenExpirationDate] = React.useState(null);
     const [userId, setUserId] = React.useState(null);
+    const [username, setUsername] = React.useState(null);
 
     React.useEffect(() => {
         const userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
         if (userData && userData.token && new Date(userData.expiration) > new Date()) {
-            login(userData.userId, userData.token, new Date(userData.expiration));
+            login(userData.userId, userData.username, userData.token, new Date(userData.expiration));
         }
     }, []);
 
@@ -27,14 +28,16 @@ const useAuth = () => {
 
     }, [token, tokenExpirationDate]);
 
-    const login = (userId, token, expirationDate) => {
+    const login = (userId, username, token, expirationDate) => {
         setToken(token);
         setUserId(userId);
+        setUsername(username);
         const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
         setTokenExpirationDate(tokenExpirationDate);
-        
+
         localStorage.setItem(USER_DATA_KEY, JSON.stringify({
             userId: userId,
+            username: username,
             token: token,
             expiration: tokenExpirationDate.toISOString()
         }));
@@ -43,11 +46,12 @@ const useAuth = () => {
     const logout = () => {
         setToken(null);
         setUserId(null);
+        setUsername(null);
         setTokenExpirationDate(null);
         localStorage.removeItem(USER_DATA_KEY);
     };
 
-    return { userId, token, login, logout };
+    return { userId, username, token, login, logout };
 };
 
 export default useAuth;

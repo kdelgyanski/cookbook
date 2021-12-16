@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
 import { Card, ErrorModal, Panel } from '../../components';
+import AuthContext from '../../context/AuthContext';
 
 const MyKitchen = () => {
+
+    const auth = useContext(AuthContext);
 
     const userId = useParams().userId;
     const navigate = useNavigate();
@@ -36,7 +39,7 @@ const MyKitchen = () => {
 
     return (
         <div className='container app-page'>
-            This is the MyKitchen Page
+            <h2>{auth.username}'s kitchen</h2>
             <button type='button' className='btn btn-primary' onClick={handleAddRecipeClick}>Add Recipe</button>
             {error && <ErrorModal message={error} onClose={() => { }} />}
             {recipes.length === 0 && <h2>No recipes created yet!</h2>}

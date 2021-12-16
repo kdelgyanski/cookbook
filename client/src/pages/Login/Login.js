@@ -29,7 +29,7 @@ const Login = () => {
                     setUsername('');
                     setPassword('');
 
-                    auth.login(responseData.userId, responseData.token);
+                    auth.login(responseData.userId, responseData.username, responseData.token);
 
                     navigate(`/${responseData.userId}/my-kitchen`);
                 } catch (err) {
@@ -48,7 +48,7 @@ const Login = () => {
                     setEmail('');
                     setPassword('');
 
-                    auth.login(responseData.userId, responseData.token);
+                    auth.login(responseData.userId, responseData.username, responseData.token);
 
                     navigate('/');
                 } catch (err) {
