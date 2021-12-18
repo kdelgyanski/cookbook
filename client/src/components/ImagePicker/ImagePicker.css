@@ -1,3 +1,7 @@
+.image-picker {
+    position: relative;
+}
+
 .image-picker .image-picker-input {
     display:none;
 }
@@ -7,6 +11,12 @@
     height: auto;
     margin-bottom: 1em;
     position: relative;
+    border: 1px solid;
+}
+
+.image-picker .preview-wrapper.hovered {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .preview-wrapper .delete-image-btn {
@@ -14,4 +24,16 @@
     top: 0;
     left: 92%;
     padding: 2px 4px;
+}
+
+.image-picker .btn.default-preview {
+    position: absolute;
+    top: 45%;
+    margin-left: 35%;
+}
+
+.image-picker .btn.default-preview.hovered {
+    background-color: #FDAB07;
+    color: #575965;
+    border-color: #575965;
 }

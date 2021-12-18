@@ -8,7 +8,8 @@ import './ImagePicker.css';
 const ImagePicker = ({
     id,
     className,
-    onImagePicked
+    onImagePicked,
+    defaultPreview
 }) => {
 
     const inputRef = React.useRef(null);
@@ -16,10 +17,12 @@ const ImagePicker = ({
     const [file, setFile] = React.useState(null);
     const [previewUrl, setPreviewUrl] = React.useState(null);
     const [error, setError] = React.useState(null);
+    const [hover, toggleHover] = React.useState(false)
 
     React.useEffect(() => {
         if (!file) {
             setPreviewUrl(null);
+            inputRef.current.value = null;
             return;
         } else {
             const fileReader = new FileReader();
@@ -41,7 +44,6 @@ const ImagePicker = ({
 
     };
 
-
     return (
         <>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
@@ -54,25 +56,52 @@ const ImagePicker = ({
                     accept='.png,.jpg,.jpeg'
                     onChange={handleImagePicked}
                 />
-                {previewUrl && <div className='preview-wrapper'>
-                    <img className='img-fluid preview-image' src={previewUrl} alt='Preview' />
-                    <button
-                        className='btn delete-image-btn'
-                        type='button'
-                        onClick={() => setFile(null)}
-                    >
-                        <BsXCircle />
-                    </button>
-                </div>}
+                {previewUrl && <Preview previewUrl={previewUrl} onDelete={() => setFile(null)} />}
+                {defaultPreview && !previewUrl && <Preview
+                    className={`${hover ? 'hovered' : ''}`}
+                    previewUrl={defaultPreview}
+                    onClick={() => inputRef.current.click()}
+                    onMouseOver={() => toggleHover(true)}
+                    onMouseOut={() => toggleHover(false)}
+                />}
                 <button
-                    className='btn btn-primary pick-btn'
+                    className={`btn btn-primary pick-btn ${!previewUrl && defaultPreview ? 'default-preview' : ''} ${hover ? 'hovered' : ''}`}
                     type='button'
                     onClick={() => inputRef.current.click()}
+                    onMouseOver={() => toggleHover(true)}
+                    onMouseOut={() => toggleHover(false)}
                 >
                     Pick image
                 </button>
             </div>
         </>
+    );
+};
+
+const Preview = ({
+    previewUrl,
+    className,
+    onDelete,
+    onClick,
+    onMouseOver,
+    onMouseOut
+}) => {
+    return (
+        <div
+            className={`preview-wrapper ${className ? className : ''}`}
+            onClick={onClick ? onClick : undefined}
+            onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut}
+        >
+            <img className='img-fluid preview-image' src={previewUrl} alt='Preview' />
+            {onDelete && <button
+                className='btn delete-image-btn'
+                type='button'
+                onClick={onDelete}
+            >
+                <BsXCircle />
+            </button>}
+        </div>
     );
 };
 

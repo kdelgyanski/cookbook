@@ -165,6 +165,7 @@ const CreateRecipe = () => {
                             id='recipe-image'
                             className='recipe-image'
                             onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
+                            defaultPreview='./images/no_image.svg'
                         />
                     </div>
                 </div>
