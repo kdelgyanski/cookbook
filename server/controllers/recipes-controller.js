@@ -139,7 +139,11 @@ const deleteRecipe = async (req, res, next) => {
 
     if (imagePath) {
         fs.unlink(imagePath, err => {
-            console.log('Could not remove image for recipe: ' + err.message);
+            if (err) {
+                console.log('Could not remove image for recipe: ' + err);
+            } else {
+                console.log('Successfully removed image for recipe: ' + err);
+            }
         });
     }
 
