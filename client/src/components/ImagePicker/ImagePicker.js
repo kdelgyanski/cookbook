@@ -47,7 +47,7 @@ const ImagePicker = ({
     return (
         <>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            <div className={`image-picker ${className ? className : ''}`}>
+            <div className={`image-picker ${!previewUrl && defaultPreview ? 'default-preview' : ''} ${className ? className : ''}`}>
                 <input
                     id={`input-${id}`}
                     className='image-picker-input'

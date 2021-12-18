@@ -12,6 +12,7 @@
     margin-bottom: 1em;
     position: relative;
     border: 1px solid;
+    text-align: center;
 }
 
 .image-picker .preview-wrapper.hovered {
@@ -26,10 +27,14 @@
     padding: 2px 4px;
 }
 
+.image-picker.default-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .image-picker .btn.default-preview {
     position: absolute;
-    top: 45%;
-    margin-left: 35%;
 }
 
 .image-picker .btn.default-preview.hovered {
