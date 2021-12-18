@@ -1,14 +1,32 @@
 .app-card {
-    max-width: 300px;
-    min-width: 230px;
-    height: 300px;
+    width: 17em;
+    height: 17em;
+    background-color: #575965;
 }
 
 .app-card .card-image {
     height: 75%;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.app-card .card-image:before {
+    content: ' ';
+    display: block;
+    background-image: url('./no_image.svg');
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .app-card:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(1.02);
+}
+
+.app-card .card-title {
+    text-align: center;
 }
