@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const fs = require(fs);
+const fs = require('fs');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
@@ -137,9 +137,11 @@ const deleteRecipe = async (req, res, next) => {
         return next(new HttpError('Something went wrong! Could not delete recipe: ' + err.message, 500));
     }
 
-    fs.unlink(imagePath, err => {
-        console.log('Could not remove image for recipe: ' + err.message);
-    });
+    if (imagePath) {
+        fs.unlink(imagePath, err => {
+            console.log('Could not remove image for recipe: ' + err.message);
+        });
+    }
 
     res.status(200).json({ message: 'Successfully deleted recipe.' });
 
