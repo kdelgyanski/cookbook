@@ -1,13 +1,20 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
-import { Badge } from '../../components';
+
+import AuthContext from '../../context/AuthContext';
+
+import { Badge, ErrorModal } from '../../components';
 import Ingredients from '../CreateRecipe/Ingredients';
 
 const Details = () => {
 
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [recipe, setRecipe] = React.useState(null);
-    const [labels, setLabels] = React.useState([])
+    const [labels, setLabels] = React.useState([]);
+    const [error, setError] = React.useState(null);
 
     const recipeId = useParams().id;
 
@@ -27,8 +34,20 @@ const Details = () => {
         getRecipe();
     }, [recipeId]);
 
+    const handleDelete = async () => {
+
+        try {
+            await recipeService.deleteRecipe(recipeId, auth.token);
+            navigate(`/${auth.userId}/my-kitchen`);
+        } catch (err) {
+            setError(err.message);
+        }
+
+    };
+
     return (
         <>
+            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             {recipe && <div className='container app-page'>
 
                 <div className='container recipe-header'>
@@ -61,6 +80,14 @@ const Details = () => {
                         )}
                     </div>
                 </div>
+
+                {auth.userId === recipe.authorId && <button
+                    type='button'
+                    className='btn btn-primary delete-recipe-btn'
+                    onClick={handleDelete}
+                >
+                    Delete
+                </button>}
 
             </div>}
         </>

@@ -49,7 +49,25 @@ export const create = async (recipe, token) => {
         throw err;
     }
     return responseData;
-}
+};
+
+export const deleteRecipe = async (id, token) => {
+    const response = await fetch(`${BASE_URL}${RECIPES_PATH}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        const err = new Error(responseData.message);
+        err.statusCode = response.status;
+        throw err;
+    }
+    return responseData;
+};
 
 // ---------------------- helpers ---------------------
 
