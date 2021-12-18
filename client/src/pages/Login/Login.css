@@ -1,0 +1,15 @@
+.app-form {
+    margin-top: 3em;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.app-form .text-field {
+    margin-bottom: 1em;
+}
+
+.app-form .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+}

@@ -23,6 +23,7 @@ body {
     background-color: white;
     color: #575965;
     border-color: #575965;
+    border-radius: 20px;
 }
 
 .btn-primary:disabled, .btn-primary.disabled {

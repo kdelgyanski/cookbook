@@ -6,6 +6,8 @@ import * as authService from '../../services/authService';
 
 import AuthContext from '../../context/AuthContext';
 
+import './Login.css';
+
 const Login = () => {
 
     const auth = React.useContext(AuthContext);
@@ -68,7 +70,11 @@ const Login = () => {
     return (
         <div className='container app-page'>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            <form id='app-form' onSubmit={handleSubmit}>
+            <form
+                id='app-form'
+                className='app-form'
+                onSubmit={handleSubmit}
+            >
                 <TextField
                     id={'login-username'}
                     label='Username'
@@ -91,20 +97,23 @@ const Login = () => {
                 >
                     {password}
                 </TextField>
-                <button
-                    className='btn btn-primary'
-                    disabled={isLoginMode ? username === '' || password === '' : username === '' || password === '' || email === ''}
-                >
-                    {isLoginMode ? 'Login' : 'Sign Up'}
+                <div className='buttons'>
+                    <button
+                        className='btn btn-primary'
+                        disabled={isLoginMode ? username === '' || password === '' : username === '' || password === '' || email === ''}
+                    >
+                        {isLoginMode ? 'Login' : 'Sign Up'}
+                    </button>
+                    <button
+                        type='button'
+                        id='switch-mode'
+                        className='btn btn-primary'
+                        onClick={switchModeHandler}
+                    >
+                        Switch Mode
                 </button>
+                </div>
             </form>
-            <button
-                id='switch-mode'
-                className='btn btn-primary'
-                onClick={switchModeHandler}
-            >
-                Switch Mode
-            </button>
         </div>
     );
 }
