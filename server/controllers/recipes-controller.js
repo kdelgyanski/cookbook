@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const fs = require(fs);
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
@@ -105,6 +106,45 @@ const create = async (req, res, next) => {
 
 };
 
+const deleteRecipe = async (req, res, next) => {
+
+    const recipeId = req.params.recipeId;
+
+    let recipe;
+
+    try {
+        recipe = await Recipe.findById(recipeId).populate('authorId');
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Could not delete recipe.', 500));
+    }
+
+    if (!recipe) {
+        return next(new HttpError('Could not find recipe.', 404));
+    }
+
+    const imagePath = recipe.image;
+
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await recipe.remove({ session: session });
+
+        recipe.authorId.recipes.pull(recipe);
+        await recipe.authorId.save({ session: session });
+
+        await session.commitTransaction();
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Could not delete recipe: ' + err.message, 500));
+    }
+
+    fs.unlink(imagePath, err => {
+        console.log('Could not remove image for recipe: ' + err.message);
+    });
+
+    res.status(200).json({ message: 'Successfully deleted recipe.' });
+
+};
+
 const prepareFindParams = queryParams => {
 
     let findParams = {};
@@ -134,3 +174,4 @@ exports.getAll = getAll;
 exports.getById = getById;
 exports.getByAuthorId = getByAuthorId;
 exports.create = create;
+exports.deleteRecipe = deleteRecipe;

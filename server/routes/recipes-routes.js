@@ -7,7 +7,8 @@ const {
     getAll,
     getById,
     getByAuthorId,
-    create
+    create,
+    deleteRecipe
 } = require('../controllers/recipes-controller');
 
 const router = express.Router();
@@ -21,5 +22,7 @@ router.get('/user/:userId', getByAuthorId);
 router.use(auth);
 
 router.post('/', imageUpload.single('image'), create);
+
+router.delete('/:recipeId', deleteRecipe);
 
 module.exports = router;
