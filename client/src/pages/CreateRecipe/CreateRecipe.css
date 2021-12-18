@@ -1,0 +1,20 @@
+.create-recipe-form .heading-info {
+    display: flex;
+}
+
+.create-recipe-form .heading-info .right, .create-recipe-form .heading-info .left {
+    width: 50%;
+}
+
+.create-recipe-form .heading-info .right .recipe-image {
+    padding: 1em;
+}
+
+.create-recipe-form .heading-info .left .time-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-recipe-form .heading-info .left .time-wrapper .text-field-wrapper {
+    width: 40%;
+}

@@ -7,6 +7,8 @@ import { TextField, Counter, Dropdown, ImagePicker } from '../../components';
 import Ingredients from './Ingredients';
 import { Steps } from './Steps';
 
+import './CreateRecipe.css';
+
 const reducer = (recipe, action) => {
     let newRecipe;
 
@@ -84,28 +86,88 @@ const CreateRecipe = () => {
 
     return (
         <div className='container app-page'>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    id='title'
-                    label='Title'
-                    onChange={(value) => dispatch({ type: 'CHANGE_TITLE', payload: value })}
-                />
-                <ImagePicker
-                    id='recipe-image'
-                    onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
-                />
-                <TextField
-                    id='preparationTime'
-                    label='Preparation Time'
-                    onChange={value => dispatch({ type: 'CHANGE_PREPARATION_TIME', payload: value })}
-                    onlyNumbers
-                />
-                <TextField
-                    id='timeToCook'
-                    label='Time to cook'
-                    onChange={value => dispatch({ type: 'CHANGE_TIME_TO_COOK', payload: value })}
-                    onlyNumbers
-                />
+            <form
+                className='create-recipe-form'
+                onSubmit={handleSubmit}
+            >
+                <div className='heading-info'>
+                    <div className='left'>
+                        <TextField
+                            id='title'
+                            label='Title'
+                            onChange={(value) => dispatch({ type: 'CHANGE_TITLE', payload: value })}
+                        />
+                        <div className='time-wrapper'>
+                            <TextField
+                                id='preparationTime'
+                                label='Preparation time'
+                                placeholder='time in minutes'
+                                onChange={value => dispatch({ type: 'CHANGE_PREPARATION_TIME', payload: value })}
+                                onlyNumbers
+                            />
+                            <TextField
+                                id='timeToCook'
+                                label='Time to cook'
+                                placeholder='time in minutes'
+                                onChange={value => dispatch({ type: 'CHANGE_TIME_TO_COOK', payload: value })}
+                                onlyNumbers
+                            />
+                        </div>
+                        <div className='labels'>
+                            <Dropdown
+                                id='course'
+                                defaultValue=''
+                                label='Course'
+                                options={['main', 'soup', 'salad', 'dessert']}
+                                onChange={selected => dispatch({ type: 'CHANGE_COURSE', payload: selected })}
+                                withBadges
+                            />
+                            <Dropdown
+                                id='difficulty'
+                                defaultValue=''
+                                label='Difficulty'
+                                options={['easy', 'intermediate', 'advanced']}
+                                onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
+                                withBadges
+                            />
+                            <Dropdown
+                                id='seasonal'
+                                defaultValue=''
+                                label='Seasonal'
+                                options={['spring', 'summer', 'autumn', 'winter']}
+                                onChange={selected => dispatch({ type: 'CHANGE_SEASONAL', payload: selected })}
+                                multiselect
+                                withBadges
+                            />
+                            <Dropdown
+                                id='category'
+                                defaultValue=''
+                                label='Category'
+                                options={[
+                                    'pork',
+                                    'chicken',
+                                    'fish',
+                                    'beef',
+                                    'vegetarian',
+                                    'vegan',
+                                    'sweet',
+                                    'asian',
+                                    'mediterranean'
+                                ]}
+                                onChange={selected => dispatch({ type: 'CHANGE_CATEGORY', payload: selected })}
+                                multiselect
+                                withBadges
+                            />
+                        </div>
+                    </div>
+                    <div className='right'>
+                        <ImagePicker
+                            id='recipe-image'
+                            className='recipe-image'
+                            onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
+                        />
+                    </div>
+                </div>
                 <Counter
                     id='serving-portions'
                     label='Serving Portions'
@@ -132,50 +194,6 @@ const CreateRecipe = () => {
                 <Steps
                     steps={recipe.steps}
                     onAddStep={step => dispatch({ type: 'ADD_STEP', payload: step })}
-                />
-                <Dropdown
-                    id='course'
-                    defaultValue=''
-                    label='Course'
-                    options={['main', 'soup', 'salad', 'dessert']}
-                    onChange={selected => dispatch({ type: 'CHANGE_COURSE', payload: selected })}
-                    withBadges
-                />
-                <Dropdown
-                    id='difficulty'
-                    defaultValue=''
-                    label='Difficulty'
-                    options={['easy', 'intermediate', 'advanced']}
-                    onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
-                    withBadges
-                />
-                <Dropdown
-                    id='seasonal'
-                    defaultValue=''
-                    label='Seasonal'
-                    options={['spring', 'summer', 'autumn', 'winter']}
-                    onChange={selected => dispatch({ type: 'CHANGE_SEASONAL', payload: selected })}
-                    multiselect
-                    withBadges
-                />
-                <Dropdown
-                    id='category'
-                    defaultValue=''
-                    label='Category'
-                    options={[
-                        'pork',
-                        'chicken',
-                        'fish',
-                        'beef',
-                        'vegetarian',
-                        'vegan',
-                        'sweet',
-                        'asian',
-                        'mediterranean'
-                    ]}
-                    onChange={selected => dispatch({ type: 'CHANGE_CATEGORY', payload: selected })}
-                    multiselect
-                    withBadges
                 />
                 <button className='btn btn-primary'>Add</button>
             </form>

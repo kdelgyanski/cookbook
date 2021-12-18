@@ -30,7 +30,7 @@ const TextField = ({
     };
 
     return (
-        <>
+        <div className='text-field-wrapper'>
             {label && <label
                 id={`${id}-label`}
                 htmlFor={id}
@@ -58,7 +58,7 @@ const TextField = ({
                     readOnly={readOnly}
                 />
             }
-        </>
+        </div>
     );
 };
 

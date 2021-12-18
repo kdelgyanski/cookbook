@@ -7,6 +7,7 @@ import './ImagePicker.css';
 
 const ImagePicker = ({
     id,
+    className,
     onImagePicked
 }) => {
 
@@ -44,7 +45,7 @@ const ImagePicker = ({
     return (
         <>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            <div className='image-picker'>
+            <div className={`image-picker ${className ? className : ''}`}>
                 <input
                     id={`input-${id}`}
                     className='image-picker-input'
