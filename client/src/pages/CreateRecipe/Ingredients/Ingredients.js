@@ -2,6 +2,8 @@ import React from 'react';
 import Ingredient from './Ingredient';
 import CreateIngredient from './CreateIngredient';
 
+import './Ingredients.css';
+
 const Ingredients = ({
     children,
     onAddIngredient,
@@ -18,15 +20,20 @@ const Ingredients = ({
     return (
         <div>
             <h2>Ingredients</h2>
-            <ul className='list-group list-group-flush ingredients'>
-                {children && children.length > 0 && children.map(i =>
-                    <Ingredient
-                        key={i.name}
-                        value={i}
-                        onDeleteIngredient={onDeleteIngredient && (value => onDeleteIngredient(value))}
-                    />)}
-                {shouldRenderNewIngredient && <CreateIngredient onAddIngredient={value => handleAddIngredient(value)} />}
-            </ul>
+            {((children && children.length) || shouldRenderNewIngredient) && <div className='list-wrapper'>
+                <ul className='list-group list-group-flush ingredients'>
+                    {children && children.length > 0 && children.map(i =>
+                        <Ingredient
+                            key={i.name}
+                            value={i}
+                            onDeleteIngredient={onDeleteIngredient && (value => onDeleteIngredient(value))}
+                        />)}
+                    {shouldRenderNewIngredient && <CreateIngredient
+                        onAddIngredient={value => handleAddIngredient(value)}
+                        onCancel={() => setShouldRenderNewIngredient(false)}
+                    />}
+                </ul>
+            </div>}
             {onAddIngredient && !shouldRenderNewIngredient && <button
                 id='add-new-ingredient'
                 className='btn btn-primary'

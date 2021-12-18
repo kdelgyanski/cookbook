@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsCheck, BsX } from 'react-icons/bs';
 
 import { TextField, Dropdown } from '../../../../components';
 
@@ -6,7 +7,8 @@ import './CreateIngredient.css';
 
 const CreateIngredient = ({
     value,
-    onAddIngredient
+    onAddIngredient,
+    onCancel
 }) => {
 
     const initialState = value
@@ -42,14 +44,23 @@ const CreateIngredient = ({
                 className='ingredient-item'
             />
             <button
-                className='btn btn-primary'
+                className='btn btn-primary done'
                 onClick={(e) => {
                     e.preventDefault();
                     onAddIngredient(ingredient);
                 }}
                 disabled={ingredient.name === '' || ingredient.quantity === '' || ingredient.units === ''}
             >
-                Done
+                <BsCheck />
+            </button>
+            <button
+                className='btn btn-primary cancel'
+                onClick={(e) => {
+                    e.preventDefault();
+                    onCancel();
+                }}
+            >
+                <BsX />
             </button>
         </li>
     );
