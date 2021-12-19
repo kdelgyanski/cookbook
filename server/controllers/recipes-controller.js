@@ -77,7 +77,7 @@ const create = async (req, res, next) => {
     const recipe = new Recipe({
         authorId,
         title: req.body.title,
-        image: req.file.path,
+        image: req.file ? req.file.path : undefined,
         timeToCook: req.body.timeToCook,
         preparationTime: req.body.preparationTime,
         servingPortions: req.body.servingPortions,
@@ -85,8 +85,8 @@ const create = async (req, res, next) => {
         difficulty: req.body.difficulty,
         ingredients: JSON.parse(req.body.ingredients),
         steps: JSON.parse(req.body.steps),
-        seasonal: JSON.parse(req.body.seasonal),
-        category: JSON.parse(req.body.category)
+        seasonal: req.body.seasonal ? JSON.parse(req.body.seasonal) : undefined,
+        category: req.body.category ? JSON.parse(req.body.category) : undefined
     });
 
     try {
