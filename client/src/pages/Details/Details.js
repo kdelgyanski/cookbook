@@ -7,6 +7,10 @@ import AuthContext from '../../context/AuthContext';
 import { Badge, ErrorModal } from '../../components';
 import Ingredients from '../CreateRecipe/Ingredients';
 
+import './Details.css';
+
+import defaultImage from '../../assets/images/no_image.svg';
+
 const Details = () => {
 
     const auth = useContext(AuthContext);
@@ -48,25 +52,32 @@ const Details = () => {
     return (
         <>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            {recipe && <div className='container app-page'>
+            {recipe && <div className='container details'>
 
                 <div className='container recipe-header'>
-                    <h2>{recipe.title}</h2>
-                    <div className='labels'>
-                        {labels.map(l => <Badge key={l} >{l}</Badge>)}
+                    <div className='infos-container'>
+                        <h2>{recipe.title}</h2>
+                        <div className='labels'>
+                            {labels.map(l => <Badge key={l} >{l}</Badge>)}
+                        </div>
+                        <span>Preparation time: {recipe.preparationTime}</span>
+                        <span>Time to cook: {recipe.timeToCook}</span>
                     </div>
-                    <span>Preparation time: {recipe.preparationTime}</span>
-                    <span>Time to cook: {recipe.timeToCook}</span>
+                    <div className='image-container'>
+                        <img
+                            className='img-fluid preview-img'
+                            src={recipe.image ? `http://localhost:8000/${recipe.image}` : defaultImage}
+                            alt='Default'
+                        />
+                    </div>
                 </div>
 
                 <div className='container recipe-ingredients'>
-                    <h2>{recipe.servingPortions}</h2>
+                    <h2>Serving portions: {recipe.servingPortions}</h2>
                     <Ingredients>
                         {recipe.ingredients}
                     </Ingredients>
                 </div>
-
-                <img src={`http://localhost:8000/${recipe.image}` || 'NOT_SET'} alt='' />
 
                 <div className='container steps'>
 
