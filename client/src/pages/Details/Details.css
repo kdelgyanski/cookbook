@@ -1,5 +1,10 @@
+.details .recipe-header .infos-container, .details .recipe-steps, .details .recipe-header {
+    margin-bottom: 2em;
+}
+
 .details .recipe-header {
     display: flex;
+    max-height: 30em;
 }
 
 .details .recipe-header .infos-container, .details .recipe-header .image-container {
@@ -13,9 +18,21 @@
 }
 
 .details .recipe-header .image-container .preview-img {
-    width: 100%;
+    width: auto;
     height: 100%;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.details .recipe-header .infos-container .recipe-ingredients {
+    margin-top: 2em;
+}
+
+.details .recipe-header .infos-container .recipe-ingredients .list-wrapper {
+    max-width: 100%;
+}
+
+.details .recipe-header .infos-container .recipe-ingredients .ingredient {
+    justify-content: flex-start;
 }

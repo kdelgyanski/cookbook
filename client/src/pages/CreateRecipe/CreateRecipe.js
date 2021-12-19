@@ -5,7 +5,7 @@ import * as recipeService from '../../services/recipeService';
 
 import { TextField, Counter, Dropdown, ImagePicker } from '../../components';
 import Ingredients from './Ingredients';
-import { Steps } from './Steps';
+import Steps from './Steps';
 
 import './CreateRecipe.css';
 
@@ -44,6 +44,12 @@ const reducer = (recipe, action) => {
             break;
         case 'ADD_STEP':
             newRecipe = { ...recipe, steps: [...recipe.steps, action.payload] }
+            break;
+        case 'DELETE_STEP':
+            newRecipe = {
+                ...recipe,
+                steps: recipe.steps.filter(s => s !== action.payload)
+            }
             break;
         case 'CHANGE_COURSE':
             newRecipe = { ...recipe, course: action.payload }
@@ -195,9 +201,11 @@ const CreateRecipe = () => {
                     {recipe.ingredients}
                 </Ingredients>
                 <Steps
-                    steps={recipe.steps}
                     onAddStep={step => dispatch({ type: 'ADD_STEP', payload: step })}
-                />
+                    onDeleteStep={step => dispatch({ type: 'DELETE_STEP', payload: step })}
+                >
+                    {recipe.steps}
+                </Steps>
                 <button className='btn btn-primary'>Add</button>
             </form>
         </div>

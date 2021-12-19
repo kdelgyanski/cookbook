@@ -43,25 +43,27 @@ const CreateIngredient = ({
                 onChange={units => setIngredient({ ...ingredient, units: units })}
                 className='ingredient-item'
             />
-            <button
-                className='btn btn-primary done'
-                onClick={(e) => {
-                    e.preventDefault();
-                    onAddIngredient(ingredient);
-                }}
-                disabled={ingredient.name === '' || ingredient.quantity === '' || ingredient.units === ''}
-            >
-                <BsCheck />
-            </button>
-            <button
-                className='btn btn-primary cancel'
-                onClick={(e) => {
-                    e.preventDefault();
-                    onCancel();
-                }}
-            >
-                <BsX />
-            </button>
+            <div className='control-buttons'>
+                <button
+                    className='btn btn-primary done'
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onAddIngredient(ingredient);
+                    }}
+                    disabled={ingredient.name === '' || ingredient.quantity === '' || ingredient.units === ''}
+                >
+                    <BsCheck />
+                </button>
+                <button
+                    className='btn btn-primary cancel'
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onCancel();
+                    }}
+                >
+                    <BsX />
+                </button>
+            </div>
         </li>
     );
 };

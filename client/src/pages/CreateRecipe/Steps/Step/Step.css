@@ -1,0 +1,30 @@
+.step {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    color: #FDAB07;
+    border-color: #FDAB07;
+}
+
+.step .text-field-wrapper {
+    width: 80%;
+}
+
+.step .list-icon {
+    max-height: 1.5em;
+    margin-right: 2em;
+    filter: invert(73%) sepia(92%) saturate(2265%) hue-rotate(356deg) brightness(101%) contrast(98%);
+}
+
+.step .step-item {
+    margin-right: 5px;
+}
+
+.step .delete-step-btn {
+    margin-left: auto;
+}
+
+.step .step-value {
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
