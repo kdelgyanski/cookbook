@@ -4,6 +4,8 @@ import * as recipeService from '../../services/recipeService';
 
 import './Home.css';
 
+import logo from '../../assets/images/mish_mash_2.png';
+
 const Home = () => {
 
     const [recipes, setRecipes] = React.useState([]);
@@ -45,7 +47,7 @@ const Home = () => {
         <div className='app-page'>
 
             <div className='container jumbotron-container' >
-                <img className='img-fluid img-big-logo' src='./images/mish_mash_2.png' alt='Big Logo' />
+                <img className='img-fluid img-big-logo' src={logo} alt='Big Logo' />
                 <TextField
                     id='search-input'
                     className='search-bar'

@@ -4,6 +4,8 @@ import AuthContext from '../../context/AuthContext';
 
 import './Header.css';
 
+import logo from '../../assets/images/mish_mash_3.png';
+
 const Header = () => {
 
     const location = useLocation();
@@ -31,7 +33,7 @@ const Header = () => {
                     to='/'
                     className='nav-link logo'
                 >
-                    <img className='logo-img' src='./images/mish_mash_3.png' alt='logo' />
+                    <img className='logo-img' src={logo} alt='logo' />
                 </Link>
                 {navLinks.map(navLink =>
                     <Link

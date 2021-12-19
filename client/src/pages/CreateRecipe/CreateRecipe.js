@@ -9,6 +9,8 @@ import { Steps } from './Steps';
 
 import './CreateRecipe.css';
 
+import defaultPreviewImage from '../../assets/images/no_image.svg'
+
 const reducer = (recipe, action) => {
     let newRecipe;
 
@@ -165,7 +167,7 @@ const CreateRecipe = () => {
                             id='recipe-image'
                             className='recipe-image'
                             onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
-                            defaultPreview='./images/no_image.svg'
+                            defaultPreview={defaultPreviewImage}
                         />
                     </div>
                 </div>
