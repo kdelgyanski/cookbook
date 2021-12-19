@@ -12,8 +12,7 @@ const TextField = ({
     type,
     readOnly,
     isLarge,
-    onlyNumbers,
-    format
+    onlyNumbers
 }) => {
 
     const [value, setValue] = React.useState(children || '');

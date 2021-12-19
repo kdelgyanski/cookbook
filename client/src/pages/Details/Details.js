@@ -89,6 +89,17 @@ const Details = () => {
                     Delete
                 </button>}
 
+                {auth.userId === recipe.authorId && <button
+                    type='button'
+                    className='btn btn-primary edit-recipe-btn'
+                    onClick={() => {
+                        navigate(`/edit-recipe/${recipe.id}`, { initialRecipe: recipe })
+                        console.log('edit');
+                    }}
+                >
+                    Edit
+                </button>}
+
             </div>}
         </>
     );
