@@ -1,4 +1,6 @@
 import React from 'react';
+import { BsPlus } from 'react-icons/bs';
+
 import Ingredient from './Ingredient';
 import CreateIngredient from './CreateIngredient';
 
@@ -39,7 +41,7 @@ const Ingredients = ({
                 className='btn btn-primary'
                 onClick={() => setShouldRenderNewIngredient(old => !old)}
             >
-                +
+                <BsPlus />
             </button>}
         </div>
     );

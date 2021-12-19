@@ -75,6 +75,12 @@ const CreateRecipe = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
     const [recipe, dispatch] = React.useReducer(reducer, { authorId: auth.userId, servingPortions: 1, ingredients: [], steps: [] });
+    const [isSaveDisabled, setIsSaveDisabled] = React.useState(true);
+
+    React.useEffect(() => {
+        setIsSaveDisabled(checkIsSaveDisabled(recipe));
+    }, [recipe]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -206,19 +212,35 @@ const CreateRecipe = () => {
                 >
                     {recipe.steps}
                 </Steps>
-                <button className='btn btn-primary'>Add</button>
+                <div className='control-buttons'>
+                    <button
+                        className='btn btn-primary'
+                        disabled={isSaveDisabled}
+                    >
+                        Save
+                    </button>
+                </div>
             </form>
         </div>
     );
 };
 
+const checkIsSaveDisabled = (recipe) => {
+    return !recipe.title || recipe.title === ''
+        || !recipe.preparationTime || recipe.preparationTime === ''
+        || !recipe.timeToCook || recipe.timeToCook === ''
+        || !recipe.course || recipe.course === ''
+        || !recipe.difficulty || recipe.difficulty === ''
+        || !recipe.servingPortions
+        || !recipe.ingredients || recipe.ingredients.length === 0
+        || !recipe.steps || recipe.steps.length === 0
+
+};
 
 const areIngredientsEqual = (original, toCompare) => {
     return original.name === toCompare.name
         && original.quantity === toCompare.quantity
         && original.units === toCompare.units;
-}
-
-
+};
 
 export default CreateRecipe;

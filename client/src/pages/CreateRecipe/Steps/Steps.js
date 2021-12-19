@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BsCheck, BsX } from 'react-icons/bs';
+import { BsCheck, BsX, BsPlus } from 'react-icons/bs';
 
 import Step from './Step';
 import { TextField } from '../../../components';
@@ -19,10 +19,10 @@ const Steps = ({
             <h2>Steps</h2>
             {((children && children.length) || shouldRenderNewStep) && <div className='list-wrapper'>
                 <ul className='list-group list-group-flush steps'>
-                    {children && children.length > 0 && children.map(i =>
+                    {children && children.length > 0 && children.map((s, i) =>
                         <Step
-                            key={i.name}
-                            value={i}
+                            key={i}
+                            value={s}
                             onDeleteStep={onDeleteStep && (value => onDeleteStep(value))}
                         />)}
                     {shouldRenderNewStep && <li className='step'>
@@ -64,7 +64,7 @@ const Steps = ({
                 className='btn btn-primary'
                 onClick={() => setShouldRenderNewStep(old => !old)}
             >
-                +
+                <BsPlus />
             </button>}
         </div>
     );

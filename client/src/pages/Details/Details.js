@@ -29,7 +29,7 @@ const Details = () => {
             try {
                 const response = await recipeService.getById(recipeId);
                 setRecipe(response);
-                setLabels([response.type, response.difficulty, ...response.category, ...response.seasonal]);
+                setLabels([response.course, response.difficulty, ...response.category, ...response.seasonal]);
             } catch (err) {
                 console.log(err);
             }
