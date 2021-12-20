@@ -34,6 +34,7 @@ const EditRecipe = () => {
 
         // TODO
         console.log('EDIT')
+        console.log(recipe);
 
     };
 

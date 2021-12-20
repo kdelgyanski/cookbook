@@ -15,8 +15,6 @@ const TextField = ({
     onlyNumbers
 }) => {
 
-    const [value, setValue] = React.useState(children || '');
-
     const handleChange = e => {
         const newValue = e.target.value;
 
@@ -24,7 +22,6 @@ const TextField = ({
             return;
         }
 
-        setValue(newValue)
         onChange(newValue);
     };
 
@@ -43,7 +40,7 @@ const TextField = ({
                     name={`${id}-name`}
                     type={type ? type : 'text'}
                     placeholder={placeholder}
-                    value={value}
+                    value={children || ''}
                     onChange={handleChange}
                     readOnly={readOnly}
                 />
@@ -52,7 +49,7 @@ const TextField = ({
                     className={`form-control text-field ${className}`}
                     name={`${id}-name`}
                     placeholder={placeholder}
-                    value={value}
+                    value={children || ''}
                     onChange={handleChange}
                     readOnly={readOnly}
                 />

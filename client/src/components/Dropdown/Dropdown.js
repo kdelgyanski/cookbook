@@ -41,6 +41,25 @@ const Dropdown = ({
         setIsOpen(open => !open);
     };
 
+    const handleOptionClick = (value) => {
+
+        let newSelection;
+        if (multiselect) {
+            if (selected.includes(value)) {
+                newSelection = selected.filter(item => item !== value);
+            } else {
+                newSelection = [...selected, value];
+            }
+        } else {
+            newSelection = value;
+        }
+
+        setSelected(newSelection);
+        onChange(newSelection);
+        setIsOpen(false);
+
+    }
+
     if (readOnly) {
         return (
             <TextField
@@ -87,43 +106,28 @@ const Dropdown = ({
                         <span
                             key={o}
                             className='dropdown-item'
-                            onClick={() => {
-
-                                let newSelection;
-                                if (multiselect) {
-                                    if (selected.includes(o)) {
-                                        newSelection = selected.filter(item => item !== o);
-                                    } else {
-                                        newSelection = [...selected, o];
-                                    }
-                                } else {
-                                    newSelection = o;
-                                }
-
-                                setSelected(newSelection);
-                                onChange(newSelection);
-                                setIsOpen(false);
-                            }}
+                            onClick={() => handleOptionClick(o)}
                         >
                             {o}
                         </span>
                     )}
                 </div>
-                {withBadges && selected.length > 0 && <div className='dropdown-labels'>
+                {withBadges && defaultValue.length > 0 && <div className='dropdown-labels'>
                     {multiselect
-                        ? selected.map(l =>
+                        ? defaultValue.map(l =>
                             <Badge
                                 className='dropdown-label'
                                 key={l}
                                 onDelete={() => {
-                                    const newSelection = selected.filter(item => item !== l);
+                                    const newSelection = defaultValue.filter(item => item !== l);
                                     setSelected(newSelection);
+                                    onChange(newSelection);
                                 }}
                             >
                                 {l}
                             </Badge>
                         )
-                        : <Badge className='dropdown-label'>{selected}</Badge>}
+                        : <Badge className='dropdown-label'>{defaultValue}</Badge>}
                 </div>}
             </div>
         </>
