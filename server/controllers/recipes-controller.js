@@ -153,6 +153,64 @@ const deleteRecipe = async (req, res, next) => {
 
 };
 
+const updateRecipe = async (req, res, next) => {
+
+    const recipeId = req.params.recipeId;
+
+    let recipe;
+    try {
+        recipe = await Recipe.findById(recipeId);
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Please try again later!', 500));
+    }
+
+    if (!recipe) {
+        return next(new HttpError('Recipe with id ' + recipeId + ' was not found!', 404));
+    }
+
+    const {
+        title,
+        timeToCook,
+        preparationTime,
+        servingPortions,
+        course,
+        difficulty
+    } = req.body;
+
+    const ingredients = JSON.parse(req.body.ingredients);
+    const steps = JSON.parse(req.body.steps);
+    const seasonal = req.body.seasonal ? JSON.parse(req.body.seasonal) : undefined;
+    const category = req.body.category ? JSON.parse(req.body.category) : undefined;
+
+    recipe.title = title;
+    recipe.timeToCook = timeToCook;
+    recipe.preparationTime = preparationTime;
+    recipe.servingPortions = servingPortions;
+    recipe.course = course;
+    recipe.difficulty = difficulty;
+    recipe.ingredients = ingredients;
+    recipe.steps = steps;
+    recipe.seasonal = seasonal;
+    recipe.category = category;
+
+    if (req.file) {
+        recipe.image = req.file.path;
+    } else {
+        recipe.image = undefined;
+    }
+
+    try {
+        console.log(recipe);
+        await recipe.save();
+    } catch (err) {
+        console.log(err);
+        return next(new HttpError('Something went wrong! Could not create recipe! Please try again later!', 500));
+    }
+
+    res.status(200).json(recipe.toObject({ getters: true }));
+
+};
+
 const prepareFindParams = queryParams => {
 
     let findParams = {};
@@ -183,3 +241,4 @@ exports.getById = getById;
 exports.getByAuthorId = getByAuthorId;
 exports.create = create;
 exports.deleteRecipe = deleteRecipe;
+exports.updateRecipe = updateRecipe;
