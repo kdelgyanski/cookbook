@@ -30,6 +30,8 @@ const recipeSchema = new mongoose.Schema({
         ],
         required: false
     }],
-});
+    likedBy: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+    cookedBy: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }]
+}, { timestamps: true });
 
 module.exports = mongoose.model('Recipe', recipeSchema);
