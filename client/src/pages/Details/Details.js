@@ -49,6 +49,8 @@ const Details = () => {
             setError(err.message);
         }
 
+        setShowDeleteModal(false);
+
     };
 
     return (
