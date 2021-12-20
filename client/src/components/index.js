@@ -7,3 +7,5 @@ export { Counter } from './Counter';
 export { Dropdown } from './Dropdown';
 export { Badge } from './Badge';
 export { ImagePicker } from './ImagePicker';
+export { Backdrop } from './Backdrop';
+export { Modal } from './Modal';

@@ -41,7 +41,7 @@ const MyKitchen = () => {
         <div className='container app-page'>
             <h2>{auth.username}'s kitchen</h2>
             <button type='button' className='btn btn-primary' onClick={handleAddRecipeClick}>Add Recipe</button>
-            {error && <ErrorModal message={error} onClose={() => { }} />}
+            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             {recipes.length === 0 && <h2>No recipes created yet!</h2>}
             {recipes.length > 0 && <Panel
                 className='my-recipes-panel'

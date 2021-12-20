@@ -1,4 +1,6 @@
-body {
+html, body {
+    width: 100%;
+    height: 100%;
     color: #FDAB07;
     background-color: #575965;
 }
