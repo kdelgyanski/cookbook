@@ -4,7 +4,7 @@ import * as recipeService from '../../services/recipeService';
 
 import AuthContext from '../../context/AuthContext';
 
-import { Badge, ErrorModal } from '../../components';
+import { Badge, ErrorModal, Modal } from '../../components';
 import Ingredients from '../CreateRecipe/Ingredients';
 import Steps from '../CreateRecipe/Steps';
 
@@ -20,6 +20,7 @@ const Details = () => {
     const [recipe, setRecipe] = React.useState(null);
     const [labels, setLabels] = React.useState([]);
     const [error, setError] = React.useState(null);
+    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
 
     const recipeId = useParams().id;
 
@@ -52,6 +53,15 @@ const Details = () => {
 
     return (
         <>
+            {showDeleteModal && <Modal
+                id='delete-recipe-modal'
+                className='delete-recipe-modal'
+                title='Delete Recipe'
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDelete}
+            >
+                <p>Are you sure you want to delete this recipe?</p>
+            </Modal>}
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             {recipe && <div className='container details'>
 
@@ -84,7 +94,7 @@ const Details = () => {
                 {auth.userId === recipe.authorId && <button
                     type='button'
                     className='btn btn-primary delete-recipe-btn'
-                    onClick={handleDelete}
+                    onClick={() => setShowDeleteModal(true)}
                 >
                     Delete
                 </button>}
