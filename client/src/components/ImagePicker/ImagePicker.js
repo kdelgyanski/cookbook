@@ -36,6 +36,9 @@ const ImagePicker = ({
     React.useEffect(() => {
         if (imageFile) {
             setInitialImage(`http://localhost:8000/${imageFile}`);
+        } else {
+            setInitialImage(null);
+            setFile(null);
         }
     }, [imageFile]);
 
