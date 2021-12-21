@@ -9,15 +9,11 @@ const Card = ({
 }) => {
 
     const navigate = useNavigate();
-    const handleClick = () => navigate(`/details/${id}`);
 
     return (
         <div
             className={`card ${className} app-card`}
-            onClick={() => {
-                console.log('clicked on card');
-                handleClick();
-            }}>
+            onClick={() => navigate(`/details/${id}`)}>
             <img className='img-fluid card-img-top card-image' src={imgUrl} alt={title} />
             <div className='card-body'>
                 <h5 className='card-title'>{title}</h5>

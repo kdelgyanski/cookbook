@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import * as recipeService from '../../services/recipeService';
 import AuthContext from '../../context/AuthContext';
 
 import RecipeForm from '../CreateRecipe/RecipeForm';
 
+import { ErrorModal } from '../../components';
+
 const EditRecipe = () => {
 
-    //const auth = useContext(AuthContext);
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [recipe, setRecipe] = React.useState(null);
+    const [error, setError] = React.useState(null);
 
     const recipeId = useParams().id;
 
@@ -21,25 +25,31 @@ const EditRecipe = () => {
                 const response = await recipeService.getById(recipeId);
                 setRecipe(response);
             } catch (err) {
-                console.log(err);
+                setError(err);
             }
 
         };
 
         getRecipe();
-    }, [recipeId]);
+    }, []);
 
     const handleSubmit = async (e, recipe) => {
         e.preventDefault();
 
-        // TODO
-        console.log('EDIT')
         console.log(recipe);
+
+        try {
+            await recipeService.updateRecipe(recipe, auth.token);
+            navigate(navigate(`/details/${recipe.id}`));
+        } catch (err) {
+            setError(err);
+        }
 
     };
 
     return (
         <div className='container app-page'>
+            {error && <ErrorModal message={error.message} onClose={() => setError(null)} />}
             {recipe && <RecipeForm
                 initialRecipe={recipe}
                 onSave={handleSubmit}
