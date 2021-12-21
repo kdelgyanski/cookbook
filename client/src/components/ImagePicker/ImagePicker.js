@@ -19,7 +19,7 @@ const ImagePicker = ({
     const [previewUrl, setPreviewUrl] = React.useState(null);
     const [error, setError] = React.useState(null);
     const [hover, toggleHover] = React.useState(false);
-    const [initialImage, setInitialImage] = React.useState(null);
+    const [initialImage, setInitialImage] = React.useState(imageFile ? `http://localhost:8000/${imageFile}` : null);
 
     React.useEffect(() => {
         if (!file) {
@@ -36,6 +36,8 @@ const ImagePicker = ({
     React.useEffect(() => {
         if (imageFile) {
             setInitialImage(`http://localhost:8000/${imageFile}`);
+            setFile(null);
+            setPreviewUrl(null);
         } else {
             setInitialImage(null);
             setFile(null);
@@ -67,12 +69,21 @@ const ImagePicker = ({
                     accept='.png,.jpg,.jpeg'
                     onChange={handleImagePicked}
                 />
-                {previewUrl && <Preview previewUrl={previewUrl} onDelete={() => setFile(null)} />}
+                {previewUrl && <Preview
+                    previewUrl={previewUrl}
+                    onDelete={() => {
+                        setFile(null);
+                        setInitialImage(null);
+                        setPreviewUrl(null);
+                        onImagePicked(null);
+                    }}
+                />}
                 {!previewUrl && initialImage && <Preview
                     previewUrl={initialImage}
                     onDelete={() => {
                         setFile(null);
                         setInitialImage(null);
+                        onImagePicked(null);
                     }}
                 />}
                 {defaultPreview && !previewUrl && !initialImage && <Preview
