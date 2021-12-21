@@ -12,7 +12,8 @@ const TextField = ({
     type,
     readOnly,
     isLarge,
-    onlyNumbers
+    onlyNumbers,
+    onEnterKeyPress
 }) => {
 
     const handleChange = e => {
@@ -43,6 +44,11 @@ const TextField = ({
                     value={children || ''}
                     onChange={handleChange}
                     readOnly={readOnly}
+                    onKeyPress={e => {
+                        if (onEnterKeyPress && e.key === 'Enter') {
+                            onEnterKeyPress();
+                        }
+                    }}
                 />
                 : <textarea
                     id={id}
@@ -52,6 +58,11 @@ const TextField = ({
                     value={children || ''}
                     onChange={handleChange}
                     readOnly={readOnly}
+                    onKeyPress={e => {
+                        if (onEnterKeyPress && e.key === 'Enter') {
+                            onEnterKeyPress();
+                        }
+                    }}
                 />
             }
         </div>

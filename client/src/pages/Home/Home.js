@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { Card, TextField, Panel } from '../../components';
 import * as recipeService from '../../services/recipeService';
 
@@ -8,7 +9,10 @@ import logo from '../../assets/images/mish_mash_2.png';
 
 const Home = () => {
 
+    const navigate = useNavigate();
+
     const [recipes, setRecipes] = React.useState([]);
+    const [searchValue, setSearchValue] = React.useState('');
     const [seasonalTop, setSeasonalTop] = React.useState([]);
 
     React.useEffect(() => {
@@ -41,7 +45,9 @@ const Home = () => {
 
     }, []);
 
-    const [searchValue, setSearchValue] = React.useState('');
+    const handleSearch = () => {
+        navigate('/search?' + createSearchParams(`title=${searchValue}`));
+    };
 
     return (
         <div className='app-page'>
@@ -53,6 +59,7 @@ const Home = () => {
                     className='search-bar'
                     onChange={setSearchValue}
                     placeholder='Search for a recipe...'
+                    onEnterKeyPress={handleSearch}
                 >
                     {searchValue}
                 </TextField>
@@ -69,7 +76,7 @@ const Home = () => {
                         id={mainDish.id}
                         key={mainDish.title}
                         title={mainDish.title}
-                        imgUrl={mainDish.imgUrl}
+                        imgUrl={mainDish.image ? `http://localhost:8000/${mainDish.image}` : null}
                     />
                 )}
             </Panel>
@@ -84,7 +91,7 @@ const Home = () => {
                         id={recipe.id}
                         key={recipe.title}
                         title={recipe.title}
-                        imgUrl={recipe.imgUrl}
+                        imgUrl={recipe.image ? `http://localhost:8000/${recipe.image}` : null}
                     />
                 )}
             </Panel>

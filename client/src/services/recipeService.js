@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:8000/api';
 const RECIPES_PATH = '/recipes';
 
-export const getAll = async () => await get(`${BASE_URL}${RECIPES_PATH}`);
+export const getAll = async (queryParams) => await get(queryParams ? `${BASE_URL}${RECIPES_PATH}${queryParams}` : `${BASE_URL}${RECIPES_PATH}`);
 
 export const getAllSeasonal = async (seasons) => await get(`${BASE_URL}${RECIPES_PATH}?` + new URLSearchParams({ seasonal: seasons }));
 
@@ -113,6 +113,9 @@ export const updateRecipe = async (recipe, token) => {
 // ---------------------- helpers ---------------------
 
 const get = async (url) => {
+
+    console.log(url);
+
     const response = await fetch(url);
 
     const responseData = await response.json();

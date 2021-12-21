@@ -52,7 +52,7 @@ const MyKitchen = () => {
                         id={r.id}
                         key={r.title}
                         title={r.title}
-                        imgUrl={`http://localhost:8000/${r.image}`}
+                        imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
                     />)}
             </Panel>}
         </div>
