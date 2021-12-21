@@ -9,7 +9,8 @@ const ImagePicker = ({
     id,
     className,
     onImagePicked,
-    defaultPreview
+    defaultPreview,
+    imageFile
 }) => {
 
     const inputRef = React.useRef(null);
@@ -17,7 +18,8 @@ const ImagePicker = ({
     const [file, setFile] = React.useState(null);
     const [previewUrl, setPreviewUrl] = React.useState(null);
     const [error, setError] = React.useState(null);
-    const [hover, toggleHover] = React.useState(false)
+    const [hover, toggleHover] = React.useState(false);
+    const [initialImage, setInitialImage] = React.useState(null);
 
     React.useEffect(() => {
         if (!file) {
@@ -30,6 +32,12 @@ const ImagePicker = ({
             fileReader.readAsDataURL(file);
         }
     }, [file]);
+
+    React.useEffect(() => {
+        if (imageFile) {
+            setInitialImage(`http://localhost:8000/${imageFile}`);
+        }
+    }, [imageFile]);
 
     const handleImagePicked = e => {
 
@@ -47,7 +55,7 @@ const ImagePicker = ({
     return (
         <>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            <div className={`image-picker ${!previewUrl && defaultPreview ? 'default-preview' : ''} ${className ? className : ''}`}>
+            <div className={`image-picker ${!previewUrl && defaultPreview && !initialImage ? 'default-preview' : ''} ${className ? className : ''}`}>
                 <input
                     id={`input-${id}`}
                     className='image-picker-input'
@@ -57,7 +65,14 @@ const ImagePicker = ({
                     onChange={handleImagePicked}
                 />
                 {previewUrl && <Preview previewUrl={previewUrl} onDelete={() => setFile(null)} />}
-                {defaultPreview && !previewUrl && <Preview
+                {!previewUrl && initialImage && <Preview
+                    previewUrl={initialImage}
+                    onDelete={() => {
+                        setFile(null);
+                        setInitialImage(null);
+                    }}
+                />}
+                {defaultPreview && !previewUrl && !initialImage && <Preview
                     className={`${hover ? 'hovered' : ''}`}
                     previewUrl={defaultPreview}
                     onClick={() => inputRef.current.click()}
@@ -65,7 +80,7 @@ const ImagePicker = ({
                     onMouseOut={() => toggleHover(false)}
                 />}
                 <button
-                    className={`btn btn-primary pick-btn ${!previewUrl && defaultPreview ? 'default-preview' : ''} ${hover ? 'hovered' : ''}`}
+                    className={`btn btn-primary pick-btn ${!previewUrl && defaultPreview && !initialImage ? 'default-preview' : ''} ${hover ? 'hovered' : ''}`}
                     type='button'
                     onClick={() => inputRef.current.click()}
                     onMouseOver={() => toggleHover(true)}

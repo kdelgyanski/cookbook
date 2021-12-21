@@ -171,6 +171,7 @@ const RecipeForm = ({
                         className='recipe-image'
                         onImagePicked={value => dispatch({ type: 'CHANGE_IMAGE', payload: value })}
                         defaultPreview={defaultPreviewImage}
+                        imageFile={recipe.image}
                     />
                 </div>
             </div>
