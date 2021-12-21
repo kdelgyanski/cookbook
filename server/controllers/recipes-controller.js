@@ -231,6 +231,10 @@ const prepareFindParams = queryParams => {
         findParams.category = queryParams.category;
     }
 
+    if (queryParams.title) {
+        findParams.title = { $regex: queryParams.title, $options: 'i' };
+    }
+
     return findParams;
 
 };
