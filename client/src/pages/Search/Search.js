@@ -1,8 +1,10 @@
 import React from 'react';
-import { useLocation, useHistory, useNavigate } from 'react-router-dom';
 
-import { Panel, Card, TextField } from '../../components';
+import { useQueryParams } from '../../hooks';
+import { Panel, Card, TextField, ErrorModal } from '../../components';
 import * as recipeService from '../../services/recipeService';
+
+import './Search.css';
 
 const Search = () => {
 
@@ -10,6 +12,7 @@ const Search = () => {
     const [searchKeyword, setSearchKeyword] = React.useState('');
     const [recipes, setRecipes] = React.useState([]);
     const [triggerSearch, setTriggerSearch] = React.useState(false);
+    const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
 
@@ -17,15 +20,14 @@ const Search = () => {
             return param.key + '=' + param.value;
         }).join('&');
 
-        setSearchKeyword(queryParams[0].value);
-
         const fetchAllRecipes = async () => {
             try {
                 const response = await recipeService.getAll(query);
+                setSearchKeyword(queryParams[0].value);
                 setRecipes(response);
                 setTriggerSearch(false);
             } catch (err) {
-                console.log(err);
+                setError(err.message);
             }
         }
 
@@ -34,8 +36,8 @@ const Search = () => {
     }, [triggerSearch]);
 
     return (
-        <div className='container app-page'>
-
+        <div className='container app-page search-page'>
+            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             <TextField
                 id='search-input'
                 className='search-bar'
@@ -51,48 +53,28 @@ const Search = () => {
 
             <Panel
                 className='search-result-panel'
-                title='Your search result'
+                title={
+                    recipes.length === 0
+                        ? 'Nothing found :('
+                        : 'Looking for something like these?'
+                }
+                singleItem={recipes.length === 0}
             >
-                {recipes.map(r =>
-                    <Card
-                        id={r.id}
-                        key={r.title}
-                        title={r.title}
-                        imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
-                    />
-                )}
+                {recipes.length > 0
+                    ? recipes.map(r =>
+                        <Card
+                            id={r.id}
+                            key={r.title}
+                            title={r.title}
+                            imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
+                        />
+                    )
+                    : <p className='no-results-message'>Sorry, no recipes were found! Try changing the search parameters.</p>
+                }
             </Panel>
 
         </div>
     );
 };
-
-const useQueryParams = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    console.log(location);
-
-    const queryParams = location.search.substr(1).split('&');
-
-    const keyValuePairs = queryParams.map(paramPair => paramPair.split('='));
-
-    const keyValueObjects = keyValuePairs.map(a => a.reduce((acc, curr, index) => {
-        console.log(curr);
-        if (index === 0) {
-            acc['key'] = curr;
-        } else {
-            acc['value'] = curr;
-        }
-        return acc;
-    }, {}));
-
-
-    const setUrl = (newQueryParams) => {
-        navigate(location.pathname + newQueryParams);
-    };
-
-    return [keyValueObjects, setUrl];
-}
 
 export default Search;

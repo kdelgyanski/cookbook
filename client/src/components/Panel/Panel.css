@@ -26,6 +26,15 @@
     gap: 1em;
 }
 
+.app-panel .panel-items.single-item{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    justify-items: center;
+    margin: 1em 0 1em 0;
+    gap: 1em;
+}
+
 .app-panel .view-more-link {
     color: #575965;
     text-decoration: none;
