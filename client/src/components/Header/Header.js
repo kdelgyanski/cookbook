@@ -13,10 +13,10 @@ const Header = () => {
     const auth = useContext(AuthContext);
 
     const navLinks = [
-        { name: 'Salads', link: '/salads/' },
-        { name: 'Soups', link: '/soups/' },
-        { name: 'Main Dishes', link: '/main-dishes/' },
-        { name: 'Desserts', link: '/desserts/' }
+        { name: 'Salads', link: '/search?course=salad' },
+        { name: 'Soups', link: '/search?course=soup' },
+        { name: 'Main Dishes', link: '/search?course=main' },
+        { name: 'Desserts', link: '/search?course=dessert' }
     ];
 
     auth.isLoggedIn

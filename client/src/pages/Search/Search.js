@@ -9,14 +9,7 @@ import './Search.css';
 const Search = () => {
 
     const [queryParams, setQueryParams] = useQueryParams();
-    const [searchKeyword, setSearchKeyword] = React.useState('');
-    const [course, setCourse] = React.useState('');
-    const [difficulty, setDifficulty] = React.useState('');
-    const [seasonal, setSeasonal] = React.useState([]);
-    const [category, setCategory] = React.useState([]);
-
     const [recipes, setRecipes] = React.useState([]);
-    const [triggerSearch, setTriggerSearch] = React.useState(true);
     const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
@@ -26,41 +19,21 @@ const Search = () => {
         const fetchAllRecipes = async () => {
             try {
                 const response = await recipeService.getAll(query);
-
-                updateFilters();
-
                 setRecipes(response);
             } catch (err) {
                 setError(err.message);
             }
         }
 
-        triggerSearch && fetchAllRecipes();
-        setTriggerSearch(false);
+        fetchAllRecipes();
 
-    }, [triggerSearch]);
+    }, [queryParams]);
 
-    const handleSearch = () => {
+    const handleFilterChange = (filterKey, value) => {
         let newQueryParams = [...queryParams];
+        newQueryParams = updateQueryParam(newQueryParams, filterKey, value);
 
-        newQueryParams = updateQueryParam(newQueryParams, 'title', searchKeyword);
-        newQueryParams = updateQueryParam(newQueryParams, 'course', course);
-        newQueryParams = updateQueryParam(newQueryParams, 'difficulty', difficulty);
-        newQueryParams = updateQueryParam(newQueryParams, 'seasonal', seasonal);
-        newQueryParams = updateQueryParam(newQueryParams, 'category', category);
-
-        const newQuery = createQuery(newQueryParams);
-
-        setQueryParams(newQuery);
-        setTriggerSearch(true);
-    };
-
-    const updateFilters = () => {
-        updateFilter(queryParams, 'title', setSearchKeyword);
-        updateFilter(queryParams, 'category', setCategory);
-        updateFilter(queryParams, 'seasonal', setSeasonal);
-        updateFilter(queryParams, 'course', setCourse);
-        updateFilter(queryParams, 'difficulty', setDifficulty);
+        setQueryParams(createQuery(newQueryParams));
     };
 
     return (
@@ -71,53 +44,45 @@ const Search = () => {
                     <TextField
                         id='search-input'
                         className='search-bar'
-                        onChange={setSearchKeyword}
+                        onChange={value => handleFilterChange('title', value)}
                         placeholder='Search for a recipe...'
-                        onEnterKeyPress={handleSearch}
                     >
-                        {searchKeyword}
+                        {getQueryParamValue(queryParams, 'title')}
                     </TextField>
-                    <button
-                        className='btn btn-primary search-button'
-                        type='button'
-                        onClick={handleSearch}
-                    >
-                        Search
-                        </button>
                 </div>
                 <div className='labels'>
                     <Dropdown
                         id='course'
                         className='label-item'
-                        defaultValue={course ? course : ''}
+                        defaultValue={getQueryParamValue(queryParams, 'course')}
                         label='Course'
                         options={['main', 'soup', 'salad', 'dessert']}
-                        onChange={setCourse}
+                        onChange={value => handleFilterChange('course', value)}
                         withBadges
                     />
                     <Dropdown
                         id='difficulty'
                         className='label-item'
-                        defaultValue={difficulty ? difficulty : ''}
+                        defaultValue={getQueryParamValue(queryParams, 'difficulty')}
                         label='Difficulty'
                         options={['easy', 'intermediate', 'advanced']}
-                        onChange={setDifficulty}
+                        onChange={value => handleFilterChange('difficulty', value)}
                         withBadges
                     />
                     <Dropdown
                         id='seasonal'
                         className='label-item'
-                        defaultValue={seasonal ? seasonal : ''}
+                        defaultValue={getQueryParamValue(queryParams, 'seasonal')}
                         label='Seasonal'
                         options={['spring', 'summer', 'autumn', 'winter']}
-                        onChange={setSeasonal}
+                        onChange={value => handleFilterChange('seasonal', value)}
                         multiselect
                         withBadges
                     />
                     <Dropdown
                         id='category'
                         className='label-item'
-                        defaultValue={category ? category : ''}
+                        defaultValue={getQueryParamValue(queryParams, 'category')}
                         label='Category'
                         options={[
                             'pork',
@@ -130,7 +95,7 @@ const Search = () => {
                             'asian',
                             'mediterranean'
                         ]}
-                        onChange={setCategory}
+                        onChange={value => handleFilterChange('category', value)}
                         multiselect
                         withBadges
                     />
@@ -150,7 +115,7 @@ const Search = () => {
                     ? recipes.map(r =>
                         <Card
                             id={r.id}
-                            key={r.title}
+                            key={r.id}
                             title={r.title}
                             imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
                         />
@@ -188,19 +153,21 @@ const updateQueryParam = (queryParams, key, value) => {
 
 };
 
-const updateFilter = (queryParams, key, updater) => {
+const getQueryParamValue = (queryParams, key) => {
+
+    let value = '';
 
     if (queryParams.find(p => p.key === key)) {
-        let filterValue;
+
 
         if (['category', 'seasonal'].includes(key)) {
-            filterValue = queryParams.find(p => p.key === key).value.split(',');
+            value = queryParams.find(p => p.key === key).value.split(',');
         } else {
-            filterValue = queryParams.find(p => p.key === key).value;
+            value = queryParams.find(p => p.key === key).value;
         }
-
-        updater(filterValue);
     }
-}
+
+    return value;
+};
 
 export default Search;

@@ -78,7 +78,7 @@ const Home = () => {
 
                     <Card
                         id={mainDish.id}
-                        key={mainDish.title}
+                        key={mainDish.id}
                         title={mainDish.title}
                         imgUrl={mainDish.image ? `http://localhost:8000/${mainDish.image}` : null}
                     />
@@ -89,11 +89,12 @@ const Home = () => {
                 className='seasonal-top-panel'
                 maxVisibleItems={3}
                 title='Seasonal'
+                viewMoreUrl={`/search?seasonal=${getActualSeason()}`}
             >
                 {seasonalTop.map(recipe =>
                     <Card
                         id={recipe.id}
-                        key={recipe.title}
+                        key={recipe.id}
                         title={recipe.title}
                         imgUrl={recipe.image ? `http://localhost:8000/${recipe.image}` : null}
                     />
