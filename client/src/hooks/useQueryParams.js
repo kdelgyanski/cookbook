@@ -6,17 +6,26 @@ const useQueryParams = () => {
 
     const queryParams = location.search.substr(1).split('&');
 
-    const keyValuePairs = queryParams.map(paramPair => paramPair.split('='));
+    let keyValueObjects = [];
 
-    const keyValueObjects = keyValuePairs.map(a => a.reduce((acc, curr, index) => {
-        index === 0
-            ? acc['key'] = curr
-            : acc['value'] = curr;
+    if (location.search !== '') {
 
-        return acc;
-    }, {}));
+        const keyValuePairs = queryParams.map(paramPair => paramPair.split('='));
 
-    const setUrl = (newQueryParams) => {
+        keyValueObjects = keyValuePairs.map(a => a.reduce((acc, curr, index) => {
+            if (curr === '') {
+                return null;
+            }
+
+            index === 0
+                ? acc['key'] = curr
+                : acc['value'] = curr;
+
+            return acc;
+        }, {}));
+    }
+
+    const setUrl = newQueryParams => {
         navigate(location.pathname + newQueryParams);
     };
 

@@ -46,7 +46,11 @@ const Home = () => {
     }, []);
 
     const handleSearch = () => {
-        navigate('/search?' + createSearchParams(`title=${searchValue}`));
+        let searchParams;
+        if (searchValue) {
+            searchParams = '?' + createSearchParams(`title=${searchValue}`)
+        }
+        navigate(`/search${searchParams ? searchParams : ''}`);
     };
 
     return (

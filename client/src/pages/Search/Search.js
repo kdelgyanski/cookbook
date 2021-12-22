@@ -16,14 +16,17 @@ const Search = () => {
 
     React.useEffect(() => {
 
-        const query = '?' + queryParams.map(param => {
-            return param.key + '=' + param.value;
-        }).join('&');
+        const query = createQuery(queryParams);
 
         const fetchAllRecipes = async () => {
             try {
                 const response = await recipeService.getAll(query);
-                setSearchKeyword(queryParams[0].value);
+
+                if (query) {
+                    const keyword = queryParams.find(p => p.key === 'title').value;
+                    setSearchKeyword(keyword);
+                }
+
                 setRecipes(response);
                 setTriggerSearch(false);
             } catch (err) {
@@ -35,6 +38,23 @@ const Search = () => {
 
     }, [triggerSearch]);
 
+    const handleSearch = () => {
+        console.log(queryParams);
+
+        let newQueryParams = [...queryParams];
+
+        if (searchKeyword && searchKeyword !== '') {
+            newQueryParams.map(p => p.key === 'title' ? (p.value = searchKeyword) : p);
+        } else {
+            newQueryParams = newQueryParams.filter(p => p.key !== 'title');
+        }
+
+        const newQuery = createQuery(newQueryParams);
+
+        setQueryParams(newQuery);
+        setTriggerSearch(true);
+    };
+
     return (
         <div className='container app-page search-page'>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
@@ -43,10 +63,7 @@ const Search = () => {
                 className='search-bar'
                 onChange={setSearchKeyword}
                 placeholder='Search for a recipe...'
-                onEnterKeyPress={() => {
-                    setQueryParams(searchKeyword ? '?title=' + searchKeyword : '');
-                    setTriggerSearch(true);
-                }}
+                onEnterKeyPress={handleSearch}
             >
                 {searchKeyword}
             </TextField>
@@ -75,6 +92,12 @@ const Search = () => {
 
         </div>
     );
+};
+
+const createQuery = queryParams => {
+    return queryParams && queryParams.length === 0
+        ? ''
+        : '?' + queryParams.map(param => param.key + '=' + param.value).join('&');
 };
 
 export default Search;
