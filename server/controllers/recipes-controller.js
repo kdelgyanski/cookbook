@@ -156,8 +156,12 @@ const deleteRecipe = async (req, res, next) => {
 const updateRecipe = async (req, res, next) => {
 
     const recipeId = req.params.recipeId;
+    const userId = req.userData.userId;
 
     let recipe;
+    let user;
+
+    // find recipe
     try {
         recipe = await Recipe.findById(recipeId);
     } catch (err) {
@@ -166,6 +170,17 @@ const updateRecipe = async (req, res, next) => {
 
     if (!recipe) {
         return next(new HttpError('Recipe with id ' + recipeId + ' was not found!', 404));
+    }
+
+    // find user
+    try {
+        user = await User.findById(userId);
+    } catch (err) {
+        return next(new HttpError('Something went wrong! Please try again later!', 500));
+    }
+
+    if (!user) {
+        return next(new HttpError('User with id ' + userId + ' was not found!', 404));
     }
 
     const {
@@ -181,6 +196,7 @@ const updateRecipe = async (req, res, next) => {
     const steps = JSON.parse(req.body.steps);
     const seasonal = req.body.seasonal ? JSON.parse(req.body.seasonal) : undefined;
     const category = req.body.category ? JSON.parse(req.body.category) : undefined;
+    const likedBy = req.body.likedBy ? JSON.parse(req.body.likedBy) : undefined
 
     recipe.title = title;
     recipe.timeToCook = timeToCook;
@@ -199,9 +215,28 @@ const updateRecipe = async (req, res, next) => {
         recipe.image = undefined;
     }
 
+    if (likedBy && !checkArraysAreEqual(recipe.likedBy, likedBy)) {
+        recipe.likedBy = likedBy;
+        if (likedBy.includes(userId)) {
+            user.liked.push(recipeId);
+        } else {
+            user.liked = user.liked.filter(id => id !== recipeId);
+        }
+    }
+
+    if (!likedBy && recipe.likedBy) {
+        recipe.likedBy = undefined;
+        user.liked = user.liked.filter(id => id !== recipeId);
+    }
+
     try {
-        console.log(recipe);
-        await recipe.save();
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        await recipe.save({ session: session });
+        await user.save({ session: session });
+
+        await session.commitTransaction();
     } catch (err) {
         console.log(err);
         return next(new HttpError('Something went wrong! Could not create recipe! Please try again later!', 500));
@@ -239,6 +274,7 @@ const prepareFindParams = queryParams => {
 
 };
 
+const checkArraysAreEqual = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 
 exports.getAll = getAll;
 exports.getById = getById;
@@ -246,3 +282,4 @@ exports.getByAuthorId = getByAuthorId;
 exports.create = create;
 exports.deleteRecipe = deleteRecipe;
 exports.updateRecipe = updateRecipe;
+exports.like = like;
