@@ -12,6 +12,12 @@ const Search = () => {
     const [recipes, setRecipes] = React.useState([]);
     const [error, setError] = React.useState(null);
 
+    const titleValue = getQueryParamValue(queryParams, 'title');
+    const courseValue = getQueryParamValue(queryParams, 'course');
+    const difficultyValue = getQueryParamValue(queryParams, 'difficulty');
+    const seasonalValue = getQueryParamValue(queryParams, 'seasonal') !== '' ? getQueryParamValue(queryParams, 'seasonal').join(',') : '';
+    const categoryValue = getQueryParamValue(queryParams, 'category') !== '' ? getQueryParamValue(queryParams, 'category').join(',') : '';
+
     React.useEffect(() => {
 
         const query = createQuery(queryParams);
@@ -27,7 +33,7 @@ const Search = () => {
 
         fetchAllRecipes();
 
-    }, [queryParams]);
+    }, [titleValue, courseValue, difficultyValue, seasonalValue, categoryValue]);
 
     const handleFilterChange = (filterKey, value) => {
         let newQueryParams = [...queryParams];
@@ -129,7 +135,7 @@ const Search = () => {
 };
 
 const createQuery = queryParams => {
-    return queryParams && queryParams.length === 0
+    return !queryParams || queryParams.length === 0
         ? ''
         : '?' + queryParams.map(param => param.key + '=' + param.value).join('&');
 };
