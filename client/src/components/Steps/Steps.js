@@ -3,7 +3,7 @@ import React from 'react';
 import { BsCheck, BsX, BsPlus } from 'react-icons/bs';
 
 import Step from './Step';
-import { TextField } from '../../../components';
+import { TextField } from '../TextField';
 
 const Steps = ({
     children,

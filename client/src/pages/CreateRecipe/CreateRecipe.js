@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import * as recipeService from '../../services/recipeService';
-
-import RecipeForm from './RecipeForm';
+import { RecipeForm } from '../../components';
 
 import './CreateRecipe.css';
 

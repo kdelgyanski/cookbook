@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsCheck, BsX } from 'react-icons/bs';
 
-import { TextField, Dropdown } from '../../../../components';
+import { TextField, Dropdown } from '../../index';
 
 import './CreateIngredient.css';
 

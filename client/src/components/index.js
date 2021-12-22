@@ -9,3 +9,6 @@ export { Badge } from './Badge';
 export { ImagePicker } from './ImagePicker';
 export { Backdrop } from './Backdrop';
 export { Modal } from './Modal';
+export { RecipeForm } from './RecipeForm';
+export { Steps } from './Steps';
+export { Ingredients } from './Ingredients';

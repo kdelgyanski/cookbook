@@ -3,7 +3,7 @@ import { BsTrash } from 'react-icons/bs';
 
 import './Ingredient.css';
 
-import listIcon from '../../../../assets/images/ingredient.svg';
+import listIcon from '../../../assets/images/ingredient.svg';
 
 const Ingredient = ({
     value,

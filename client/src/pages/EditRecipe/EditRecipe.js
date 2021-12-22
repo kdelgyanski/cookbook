@@ -4,9 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
 import AuthContext from '../../context/AuthContext';
 
-import RecipeForm from '../CreateRecipe/RecipeForm';
-
-import { ErrorModal } from '../../components';
+import { ErrorModal, RecipeForm } from '../../components';
 
 const EditRecipe = () => {
 

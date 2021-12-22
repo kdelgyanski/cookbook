@@ -4,9 +4,7 @@ import * as recipeService from '../../services/recipeService';
 
 import AuthContext from '../../context/AuthContext';
 
-import { Badge, ErrorModal, Modal } from '../../components';
-import Ingredients from '../CreateRecipe/Ingredients';
-import Steps from '../CreateRecipe/Steps';
+import { Badge, ErrorModal, Modal, Ingredients, Steps } from '../../components';
 
 import './Details.css';
 

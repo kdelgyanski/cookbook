@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { TextField, Counter, Dropdown, ImagePicker } from '../../../components';
-import Ingredients from '../Ingredients';
-import Steps from '../Steps';
+import { TextField, Counter, Dropdown, ImagePicker, Ingredients, Steps } from '../index';
 
-import defaultPreviewImage from '../../../assets/images/no_image.svg'
+import defaultPreviewImage from '../../assets/images/no_image.svg'
 
 const reducer = (recipe, action) => {
     let newRecipe;

@@ -4,7 +4,7 @@ import { BsTrash } from 'react-icons/bs';
 
 import './Step.css';
 
-import listIcon from '../../../../assets/images/ingredient.svg';
+import listIcon from '../../../assets/images/ingredient.svg';
 
 const Step = ({
     value,
