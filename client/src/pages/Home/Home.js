@@ -70,19 +70,28 @@ const Home = () => {
             </div>
 
             <Panel
-                className='weekly-top-main-dishes-panel'
+                className='weekly-top-recipes-panel'
                 maxVisibleItems={3}
                 title='Pick of the week'
             >
-                {recipes.map(mainDish =>
-
-                    <Card
-                        id={mainDish.id}
-                        key={mainDish.id}
-                        title={mainDish.title}
-                        imgUrl={mainDish.image ? `http://localhost:8000/${mainDish.image}` : null}
-                    />
-                )}
+                {filterOnlyLastWeekRecipes(recipes)
+                    .sort((a, b) => {
+                        if (a.likedBy && b.likedBy) {
+                            return b.likedBy.length - a.likedBy.length;
+                        } else if (a.likedBy) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    })
+                    .map(r =>
+                        <Card
+                            id={r.id}
+                            key={r.id}
+                            title={r.title}
+                            imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
+                        />
+                    )}
             </Panel>
 
             <Panel
@@ -131,5 +140,18 @@ const getActualSeason = () => {
 
     return season;
 };
+
+const getDateBeforeOneWeek = () => {
+    const date = new Date();
+    return date.setDate(date.getDate() - 7);
+};
+
+const filterOnlyLastWeekRecipes = recipes => {
+    return recipes.filter(r => {
+        const creationDate = new Date(r.createdAt).getTime();
+
+        return creationDate > getDateBeforeOneWeek();
+    });
+}
 
 export default Home;

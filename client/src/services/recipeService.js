@@ -87,12 +87,11 @@ export const updateRecipe = async (recipe, token) => {
     if (recipe.category) {
         formData.append('category', JSON.stringify(recipe.category));
     }
-    if (recipe.image) {
-        formData.append('image', recipe.image);
-    }
-
     if (recipe.likedBy) {
         formData.append('likedBy', JSON.stringify(recipe.likedBy));
+    }
+    if (recipe.image) {
+        formData.append('image', recipe.image);
     }
 
     const response = await fetch(`${BASE_URL}${RECIPES_PATH}/${recipe.id}`, {

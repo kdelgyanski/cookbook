@@ -40,7 +40,7 @@ const Details = () => {
         };
 
         getRecipe();
-    }, [recipeId]);
+    }, []);
 
     const handleDelete = async () => {
 
@@ -124,7 +124,7 @@ const Details = () => {
                 {auth.userId === recipe.authorId && <button
                     type='button'
                     className='btn btn-primary edit-recipe-btn'
-                    onClick={() => navigate(`/edit-recipe/${recipe.id}`, { initialRecipe: recipe })}
+                    onClick={() => navigate(`/edit-recipe/${recipe.id}`)}
                 >
                     Edit
                 </button>}
