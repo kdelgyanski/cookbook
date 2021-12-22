@@ -282,4 +282,3 @@ exports.getByAuthorId = getByAuthorId;
 exports.create = create;
 exports.deleteRecipe = deleteRecipe;
 exports.updateRecipe = updateRecipe;
-exports.like = like;
