@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 
@@ -6,7 +6,8 @@ import * as recipeService from '../../services/recipeService';
 
 import AuthContext from '../../context/AuthContext';
 
-import { Badge, ErrorModal, Modal, Ingredients, Steps } from '../../components';
+import { Badge, Modal, Ingredients, Steps } from '../../components';
+import Page from '../Page';
 
 import './Details.css';
 
@@ -17,16 +18,16 @@ const Details = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [recipe, setRecipe] = React.useState(null);
-    const [labels, setLabels] = React.useState([]);
-    const [error, setError] = React.useState(null);
-    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+    const [recipe, setRecipe] = useState(null);
+    const [labels, setLabels] = useState([]);
+    const [error, setError] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const recipeId = useParams().id;
 
     const liked = recipe && recipe.likedBy && recipe.likedBy.includes(auth.userId);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const getRecipe = async () => {
 
             try {
@@ -40,7 +41,7 @@ const Details = () => {
         };
 
         getRecipe();
-    }, []);
+    }, [recipeId]);
 
     const handleDelete = async () => {
 
@@ -74,7 +75,11 @@ const Details = () => {
     }
 
     return (
-        <>
+        <Page
+            className='details-page'
+            error={error}
+            onErrorClose={() => setError(null)}
+        >
             {showDeleteModal && <Modal
                 id='delete-recipe-modal'
                 className='delete-recipe-modal'
@@ -84,7 +89,6 @@ const Details = () => {
             >
                 <p>Are you sure you want to delete this recipe?</p>
             </Modal>}
-            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             {recipe && <div className='container details'>
 
                 <div className='recipe-header'>
@@ -138,7 +142,7 @@ const Details = () => {
                 </button>}
 
             </div>}
-        </>
+        </Page>
     );
 };
 

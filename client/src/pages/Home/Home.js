@@ -1,6 +1,7 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { Card, TextField, Panel } from '../../components';
+import Page from '../Page';
 import * as recipeService from '../../services/recipeService';
 
 import './Home.css';
@@ -11,18 +12,19 @@ const Home = () => {
 
     const navigate = useNavigate();
 
-    const [recipes, setRecipes] = React.useState([]);
-    const [searchValue, setSearchValue] = React.useState('');
-    const [seasonalTop, setSeasonalTop] = React.useState([]);
+    const [recipes, setRecipes] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [seasonalTop, setSeasonalTop] = useState([]);
+    const [error, setError] = useState(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         const fetchAllRecipes = async () => {
             try {
                 const response = await recipeService.getAll();
                 setRecipes(response);
             } catch (err) {
-                console.log(err);
+                setError(err.message);
             }
         }
 
@@ -30,14 +32,14 @@ const Home = () => {
 
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         const fetchSeasonalRecipes = async () => {
             try {
                 const response = await recipeService.getAllSeasonal([getActualSeason()]);
                 setSeasonalTop(response);
             } catch (err) {
-                console.log(err);
+                setError(err.message);
             }
         }
 
@@ -54,8 +56,11 @@ const Home = () => {
     };
 
     return (
-        <div className='app-page'>
-
+        <Page
+            className='home-page'
+            error={error}
+            onErrorClose={() => setError(null)}
+        >
             <div className='container jumbotron-container' >
                 <img className='img-fluid img-big-logo' src={logo} alt='Big Logo' />
                 <TextField
@@ -109,7 +114,7 @@ const Home = () => {
                     />
                 )}
             </Panel>
-        </div>
+        </Page>
     );
 };
 

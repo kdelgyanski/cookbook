@@ -1,7 +1,8 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
 import { useQueryParams } from '../../hooks';
-import { Panel, Card, TextField, ErrorModal, Dropdown } from '../../components';
+import Page from '../Page';
+import { Panel, Card, TextField, Dropdown } from '../../components';
 import * as recipeService from '../../services/recipeService';
 
 import './Search.css';
@@ -9,8 +10,8 @@ import './Search.css';
 const Search = () => {
 
     const [queryParams, setQueryParams] = useQueryParams();
-    const [recipes, setRecipes] = React.useState([]);
-    const [error, setError] = React.useState(null);
+    const [recipes, setRecipes] = useState([]);
+    const [error, setError] = useState(null);
 
     const titleValue = getQueryParamValue(queryParams, 'title');
     const courseValue = getQueryParamValue(queryParams, 'course');
@@ -18,7 +19,7 @@ const Search = () => {
     const seasonalValue = getQueryParamValue(queryParams, 'seasonal') !== '' ? getQueryParamValue(queryParams, 'seasonal').join(',') : '';
     const categoryValue = getQueryParamValue(queryParams, 'category') !== '' ? getQueryParamValue(queryParams, 'category').join(',') : '';
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         const query = createQuery(queryParams);
 
@@ -43,8 +44,11 @@ const Search = () => {
     };
 
     return (
-        <div className='container app-page search-page'>
-            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
+        <Page
+            className='search-page'
+            error={error}
+            onErrorClose={() => setError(null)}
+        >
             <div className='search-panel'>
                 <div className='search-bar'>
                     <TextField
@@ -129,8 +133,7 @@ const Search = () => {
                     : <p className='no-results-message'>Sorry, no recipes were found! Try changing the search parameters.</p>
                 }
             </Panel>
-
-        </div>
+        </Page>
     );
 };
 

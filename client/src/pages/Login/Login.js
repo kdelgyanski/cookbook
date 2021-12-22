@@ -1,6 +1,7 @@
-import React from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, ErrorModal } from '../../components'
+import { TextField } from '../../components'
+import Page from '../Page';
 
 import * as authService from '../../services/authService';
 
@@ -10,15 +11,15 @@ import './Login.css';
 
 const Login = () => {
 
-    const auth = React.useContext(AuthContext);
+    const auth = useContext(AuthContext);
 
     const navigate = useNavigate();
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [isLoginMode, setIsLoginMode] = React.useState(false);
-    const [error, setError] = React.useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [isLoginMode, setIsLoginMode] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -63,13 +64,12 @@ const Login = () => {
         }
     }
 
-    const switchModeHandler = () => {
-        setIsLoginMode(oldState => !oldState);
-    };
-
     return (
-        <div className='container app-page'>
-            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
+        <Page
+            className='login-page'
+            error={error}
+            onErrorClose={() => setError(null)}
+        >
             <form
                 id='app-form'
                 className='app-form'
@@ -108,13 +108,13 @@ const Login = () => {
                         type='button'
                         id='switch-mode'
                         className='btn btn-primary'
-                        onClick={switchModeHandler}
+                        onClick={() => setIsLoginMode(oldState => !oldState)}
                     >
                         Switch Mode
-                </button>
+                    </button>
                 </div>
             </form>
-        </div>
+        </Page>
     );
 }
 

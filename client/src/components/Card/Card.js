@@ -3,9 +3,9 @@ import './Card.css';
 
 const Card = ({
     id,
+    className,
     title,
-    imgUrl,
-    className
+    imgUrl
 }) => {
 
     const navigate = useNavigate();
