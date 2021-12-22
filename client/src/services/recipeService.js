@@ -91,6 +91,10 @@ export const updateRecipe = async (recipe, token) => {
         formData.append('image', recipe.image);
     }
 
+    if (recipe.likedBy) {
+        formData.append('likedBy', JSON.stringify(recipe.likedBy));
+    }
+
     const response = await fetch(`${BASE_URL}${RECIPES_PATH}/${recipe.id}`, {
         method: 'PUT',
         headers: {

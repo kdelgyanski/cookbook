@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BsHeartFill, BsHeart } from 'react-icons/bs';
+
 import * as recipeService from '../../services/recipeService';
 
 import AuthContext from '../../context/AuthContext';
@@ -21,6 +23,8 @@ const Details = () => {
     const [showDeleteModal, setShowDeleteModal] = React.useState(false);
 
     const recipeId = useParams().id;
+
+    const liked = recipe && recipe.likedBy && recipe.likedBy.includes(auth.userId);
 
     React.useEffect(() => {
         const getRecipe = async () => {
@@ -50,6 +54,24 @@ const Details = () => {
         setShowDeleteModal(false);
 
     };
+
+
+    const handleLike = async () => {
+
+        if (liked) {
+            recipe.likedBy = recipe.likedBy.filter(u => u !== auth.userId);
+        } else {
+            recipe.likedBy.push(auth.userId);
+        }
+
+        try {
+            const response = await recipeService.updateRecipe(recipe, auth.token);
+            setRecipe(response);
+            setLabels([response.course, response.difficulty, ...response.category, ...response.seasonal]);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
 
     return (
         <>
@@ -102,12 +124,17 @@ const Details = () => {
                 {auth.userId === recipe.authorId && <button
                     type='button'
                     className='btn btn-primary edit-recipe-btn'
-                    onClick={() => {
-                        navigate(`/edit-recipe/${recipe.id}`, { initialRecipe: recipe })
-                        console.log('edit');
-                    }}
+                    onClick={() => navigate(`/edit-recipe/${recipe.id}`, { initialRecipe: recipe })}
                 >
                     Edit
+                </button>}
+
+                {auth.isLoggedIn && <button
+                    type='button'
+                    className='btn btn-primary like-recipe-btn'
+                    onClick={handleLike}
+                >
+                    {liked ? <BsHeartFill /> : <BsHeart />}
                 </button>}
 
             </div>}
