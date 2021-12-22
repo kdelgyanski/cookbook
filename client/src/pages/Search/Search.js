@@ -16,7 +16,7 @@ const Search = () => {
     const [category, setCategory] = React.useState([]);
 
     const [recipes, setRecipes] = React.useState([]);
-    const [triggerSearch, setTriggerSearch] = React.useState(false);
+    const [triggerSearch, setTriggerSearch] = React.useState(true);
     const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
@@ -27,20 +27,16 @@ const Search = () => {
             try {
                 const response = await recipeService.getAll(query);
 
-                if (queryParams.find(p => p.key === 'title')) {
-                    const keyword = queryParams.find(p => p.key === 'title').value;
-                    setSearchKeyword(keyword);
-                }
+                updateFilters();
 
                 setRecipes(response);
-                setTriggerSearch(false);
             } catch (err) {
                 setError(err.message);
-                setTriggerSearch(false);
             }
         }
 
-        fetchAllRecipes();
+        triggerSearch && fetchAllRecipes();
+        setTriggerSearch(false);
 
     }, [triggerSearch]);
 
@@ -57,6 +53,14 @@ const Search = () => {
 
         setQueryParams(newQuery);
         setTriggerSearch(true);
+    };
+
+    const updateFilters = () => {
+        updateFilter(queryParams, 'title', setSearchKeyword);
+        updateFilter(queryParams, 'category', setCategory);
+        updateFilter(queryParams, 'seasonal', setSeasonal);
+        updateFilter(queryParams, 'course', setCourse);
+        updateFilter(queryParams, 'difficulty', setDifficulty);
     };
 
     return (
@@ -183,5 +187,20 @@ const updateQueryParam = (queryParams, key, value) => {
     return queryParams;
 
 };
+
+const updateFilter = (queryParams, key, updater) => {
+
+    if (queryParams.find(p => p.key === key)) {
+        let filterValue;
+
+        if (['category', 'seasonal'].includes(key)) {
+            filterValue = queryParams.find(p => p.key === key).value.split(',');
+        } else {
+            filterValue = queryParams.find(p => p.key === key).value;
+        }
+
+        updater(filterValue);
+    }
+}
 
 export default Search;
