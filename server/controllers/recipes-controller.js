@@ -211,7 +211,9 @@ const updateRecipe = async (req, res, next) => {
 
     if (req.file) {
         recipe.image = req.file.path;
-    } else {
+    }
+
+    if (!recipe.image) {
         recipe.image = undefined;
     }
 
