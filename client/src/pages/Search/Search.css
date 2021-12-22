@@ -1,3 +1,23 @@
 .search-page .search-result-panel .no-results-message {
     color: #575965;
 }
+
+.search-page .search-panel {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.search-page .search-panel .search-bar {
+    display: flex;
+    width: 100%;
+    gap: 2em;
+}
+
+.search-page .search-panel .search-bar .text-field-wrapper {
+    width: 100%;
+}
+
+.search-page .search-panel .labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

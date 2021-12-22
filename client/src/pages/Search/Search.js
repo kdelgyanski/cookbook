@@ -62,68 +62,76 @@ const Search = () => {
     return (
         <div className='container app-page search-page'>
             {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-            <TextField
-                id='search-input'
-                className='search-bar'
-                onChange={setSearchKeyword}
-                placeholder='Search for a recipe...'
-                onEnterKeyPress={handleSearch}
-            >
-                {searchKeyword}
-            </TextField>
-
-            <Dropdown
-                id='course'
-                defaultValue={course ? course : ''}
-                label='Course'
-                options={['main', 'soup', 'salad', 'dessert']}
-                onChange={setCourse}
-                withBadges
-            />
-            <Dropdown
-                id='difficulty'
-                defaultValue={difficulty ? difficulty : ''}
-                label='Difficulty'
-                options={['easy', 'intermediate', 'advanced']}
-                onChange={setDifficulty}
-                withBadges
-            />
-            <Dropdown
-                id='seasonal'
-                defaultValue={seasonal ? seasonal : ''}
-                label='Seasonal'
-                options={['spring', 'summer', 'autumn', 'winter']}
-                onChange={setSeasonal}
-                multiselect
-                withBadges
-            />
-            <Dropdown
-                id='category'
-                defaultValue={category ? category : ''}
-                label='Category'
-                options={[
-                    'pork',
-                    'chicken',
-                    'fish',
-                    'beef',
-                    'vegetarian',
-                    'vegan',
-                    'sweet',
-                    'asian',
-                    'mediterranean'
-                ]}
-                onChange={setCategory}
-                multiselect
-                withBadges
-            />
-
-            <button
-                className='btn btn-primary search-button'
-                type='button'
-                onClick={handleSearch}
-            >
-                Search
-            </button>
+            <div className='search-panel'>
+                <div className='search-bar'>
+                    <TextField
+                        id='search-input'
+                        className='search-bar'
+                        onChange={setSearchKeyword}
+                        placeholder='Search for a recipe...'
+                        onEnterKeyPress={handleSearch}
+                    >
+                        {searchKeyword}
+                    </TextField>
+                    <button
+                        className='btn btn-primary search-button'
+                        type='button'
+                        onClick={handleSearch}
+                    >
+                        Search
+                        </button>
+                </div>
+                <div className='labels'>
+                    <Dropdown
+                        id='course'
+                        className='label-item'
+                        defaultValue={course ? course : ''}
+                        label='Course'
+                        options={['main', 'soup', 'salad', 'dessert']}
+                        onChange={setCourse}
+                        withBadges
+                    />
+                    <Dropdown
+                        id='difficulty'
+                        className='label-item'
+                        defaultValue={difficulty ? difficulty : ''}
+                        label='Difficulty'
+                        options={['easy', 'intermediate', 'advanced']}
+                        onChange={setDifficulty}
+                        withBadges
+                    />
+                    <Dropdown
+                        id='seasonal'
+                        className='label-item'
+                        defaultValue={seasonal ? seasonal : ''}
+                        label='Seasonal'
+                        options={['spring', 'summer', 'autumn', 'winter']}
+                        onChange={setSeasonal}
+                        multiselect
+                        withBadges
+                    />
+                    <Dropdown
+                        id='category'
+                        className='label-item'
+                        defaultValue={category ? category : ''}
+                        label='Category'
+                        options={[
+                            'pork',
+                            'chicken',
+                            'fish',
+                            'beef',
+                            'vegetarian',
+                            'vegan',
+                            'sweet',
+                            'asian',
+                            'mediterranean'
+                        ]}
+                        onChange={setCategory}
+                        multiselect
+                        withBadges
+                    />
+                </div>
+            </div>
 
             <Panel
                 className='search-result-panel'
