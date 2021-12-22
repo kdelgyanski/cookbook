@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useQueryParams } from '../../hooks';
-import { Panel, Card, TextField, ErrorModal } from '../../components';
+import { Panel, Card, TextField, ErrorModal, Dropdown } from '../../components';
 import * as recipeService from '../../services/recipeService';
 
 import './Search.css';
@@ -10,6 +10,11 @@ const Search = () => {
 
     const [queryParams, setQueryParams] = useQueryParams();
     const [searchKeyword, setSearchKeyword] = React.useState('');
+    const [course, setCourse] = React.useState('');
+    const [difficulty, setDifficulty] = React.useState('');
+    const [seasonal, setSeasonal] = React.useState([]);
+    const [category, setCategory] = React.useState([]);
+
     const [recipes, setRecipes] = React.useState([]);
     const [triggerSearch, setTriggerSearch] = React.useState(false);
     const [error, setError] = React.useState(null);
@@ -22,7 +27,7 @@ const Search = () => {
             try {
                 const response = await recipeService.getAll(query);
 
-                if (query) {
+                if (queryParams.find(p => p.key === 'title')) {
                     const keyword = queryParams.find(p => p.key === 'title').value;
                     setSearchKeyword(keyword);
                 }
@@ -31,6 +36,7 @@ const Search = () => {
                 setTriggerSearch(false);
             } catch (err) {
                 setError(err.message);
+                setTriggerSearch(false);
             }
         }
 
@@ -39,15 +45,13 @@ const Search = () => {
     }, [triggerSearch]);
 
     const handleSearch = () => {
-        console.log(queryParams);
-
         let newQueryParams = [...queryParams];
 
-        if (searchKeyword && searchKeyword !== '') {
-            newQueryParams.map(p => p.key === 'title' ? (p.value = searchKeyword) : p);
-        } else {
-            newQueryParams = newQueryParams.filter(p => p.key !== 'title');
-        }
+        newQueryParams = updateQueryParam(newQueryParams, 'title', searchKeyword);
+        newQueryParams = updateQueryParam(newQueryParams, 'course', course);
+        newQueryParams = updateQueryParam(newQueryParams, 'difficulty', difficulty);
+        newQueryParams = updateQueryParam(newQueryParams, 'seasonal', seasonal);
+        newQueryParams = updateQueryParam(newQueryParams, 'category', category);
 
         const newQuery = createQuery(newQueryParams);
 
@@ -67,6 +71,59 @@ const Search = () => {
             >
                 {searchKeyword}
             </TextField>
+
+            <Dropdown
+                id='course'
+                defaultValue={course ? course : ''}
+                label='Course'
+                options={['main', 'soup', 'salad', 'dessert']}
+                onChange={setCourse}
+                withBadges
+            />
+            <Dropdown
+                id='difficulty'
+                defaultValue={difficulty ? difficulty : ''}
+                label='Difficulty'
+                options={['easy', 'intermediate', 'advanced']}
+                onChange={setDifficulty}
+                withBadges
+            />
+            <Dropdown
+                id='seasonal'
+                defaultValue={seasonal ? seasonal : ''}
+                label='Seasonal'
+                options={['spring', 'summer', 'autumn', 'winter']}
+                onChange={setSeasonal}
+                multiselect
+                withBadges
+            />
+            <Dropdown
+                id='category'
+                defaultValue={category ? category : ''}
+                label='Category'
+                options={[
+                    'pork',
+                    'chicken',
+                    'fish',
+                    'beef',
+                    'vegetarian',
+                    'vegan',
+                    'sweet',
+                    'asian',
+                    'mediterranean'
+                ]}
+                onChange={setCategory}
+                multiselect
+                withBadges
+            />
+
+            <button
+                className='btn btn-primary search-button'
+                type='button'
+                onClick={handleSearch}
+            >
+                Search
+            </button>
 
             <Panel
                 className='search-result-panel'
@@ -98,6 +155,25 @@ const createQuery = queryParams => {
     return queryParams && queryParams.length === 0
         ? ''
         : '?' + queryParams.map(param => param.key + '=' + param.value).join('&');
+};
+
+const updateQueryParam = (queryParams, key, value) => {
+
+    if (value &&
+        ((typeof value === 'string' && value !== '')
+            || (typeof value === 'object' && value.length > 0))
+    ) {
+        if (queryParams.find(p => p.key === key)) {
+            queryParams.map(p => p.key === key ? (p.value = value) : p);
+        } else {
+            queryParams.push({ key: key, value: value });
+        }
+    } else {
+        queryParams = queryParams.filter(p => p.key !== key);
+    }
+
+    return queryParams;
+
 };
 
 export default Search;
