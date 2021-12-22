@@ -34,7 +34,7 @@ const Home = () => {
 
         const fetchSeasonalRecipes = async () => {
             try {
-                const response = await recipeService.getAllSeasonal(['autumn']);
+                const response = await recipeService.getAllSeasonal([getActualSeason()]);
                 setSeasonalTop(response);
             } catch (err) {
                 console.log(err);
@@ -101,6 +101,34 @@ const Home = () => {
             </Panel>
         </div>
     );
-}
+};
+
+const getActualSeason = () => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth();
+
+    let season = '';
+
+    if (month < 2) {
+        season = 'winter';
+    } else if (month === 2) {
+        season = day < 21 ? 'winter' : 'spring';
+    } else if (month < 5) {
+        season = 'spring';
+    } else if (month === 5) {
+        season = day < 21 ? 'spring' : 'sommer';
+    } else if (month < 8) {
+        season = 'sommer';
+    } else if (month === 8) {
+        season = day < 21 ? 'sommer' : 'autumn';
+    } else if (month < 11) {
+        season = 'autumn';
+    } else {
+        season = day < 21 ? 'autumn' : 'winter';
+    }
+
+    return season;
+};
 
 export default Home;
