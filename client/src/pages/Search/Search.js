@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useQueryParams } from '../../hooks';
 import Page from '../Page';
 import { Panel, Card, TextField, Dropdown } from '../../components';
+import { COURSE, DIFFICULTY, CATEGORY, SEASONAL } from '../../constants';
 import * as recipeService from '../../services/recipeService';
 
 import './Search.css';
@@ -66,7 +67,7 @@ const Search = () => {
                         className='label-item'
                         defaultValue={getQueryParamValue(queryParams, 'course')}
                         label='Course'
-                        options={['main', 'soup', 'salad', 'dessert']}
+                        options={COURSE}
                         onChange={value => handleFilterChange('course', value)}
                         withBadges
                     />
@@ -75,7 +76,7 @@ const Search = () => {
                         className='label-item'
                         defaultValue={getQueryParamValue(queryParams, 'difficulty')}
                         label='Difficulty'
-                        options={['easy', 'intermediate', 'advanced']}
+                        options={DIFFICULTY}
                         onChange={value => handleFilterChange('difficulty', value)}
                         withBadges
                     />
@@ -84,7 +85,7 @@ const Search = () => {
                         className='label-item'
                         defaultValue={getQueryParamValue(queryParams, 'seasonal')}
                         label='Seasonal'
-                        options={['spring', 'summer', 'autumn', 'winter']}
+                        options={SEASONAL}
                         onChange={value => handleFilterChange('seasonal', value)}
                         multiselect
                         withBadges
@@ -94,17 +95,7 @@ const Search = () => {
                         className='label-item'
                         defaultValue={getQueryParamValue(queryParams, 'category')}
                         label='Category'
-                        options={[
-                            'pork',
-                            'chicken',
-                            'fish',
-                            'beef',
-                            'vegetarian',
-                            'vegan',
-                            'sweet',
-                            'asian',
-                            'mediterranean'
-                        ]}
+                        options={CATEGORY}
                         onChange={value => handleFilterChange('category', value)}
                         multiselect
                         withBadges

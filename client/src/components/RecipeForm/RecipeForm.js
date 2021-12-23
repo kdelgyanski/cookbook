@@ -2,6 +2,8 @@ import React from 'react';
 
 import { TextField, Counter, Dropdown, ImagePicker, Ingredients, Steps } from '../index';
 
+import { CATEGORY, SEASONAL, COURSE, DIFFICULTY } from '../../constants';
+
 import defaultPreviewImage from '../../assets/images/no_image.svg'
 
 const reducer = (recipe, action) => {
@@ -121,7 +123,7 @@ const RecipeForm = ({
                             id='course'
                             defaultValue={recipe.course ? recipe.course : ''}
                             label='Course'
-                            options={['main', 'soup', 'salad', 'dessert']}
+                            options={COURSE}
                             onChange={selected => dispatch({ type: 'CHANGE_COURSE', payload: selected })}
                             withBadges
                         />
@@ -129,7 +131,7 @@ const RecipeForm = ({
                             id='difficulty'
                             defaultValue={recipe.difficulty ? recipe.difficulty : ''}
                             label='Difficulty'
-                            options={['easy', 'intermediate', 'advanced']}
+                            options={DIFFICULTY}
                             onChange={selected => dispatch({ type: 'CHANGE_DIFFICULTY', payload: selected })}
                             withBadges
                         />
@@ -137,7 +139,7 @@ const RecipeForm = ({
                             id='seasonal'
                             defaultValue={recipe.seasonal ? recipe.seasonal : ''}
                             label='Seasonal'
-                            options={['spring', 'summer', 'autumn', 'winter']}
+                            options={SEASONAL}
                             onChange={selected => dispatch({ type: 'CHANGE_SEASONAL', payload: selected })}
                             multiselect
                             withBadges
@@ -146,17 +148,7 @@ const RecipeForm = ({
                             id='category'
                             defaultValue={recipe.category ? recipe.category : ''}
                             label='Category'
-                            options={[
-                                'pork',
-                                'chicken',
-                                'fish',
-                                'beef',
-                                'vegetarian',
-                                'vegan',
-                                'sweet',
-                                'asian',
-                                'mediterranean'
-                            ]}
+                            options={CATEGORY}
                             onChange={selected => dispatch({ type: 'CHANGE_CATEGORY', payload: selected })}
                             multiselect
                             withBadges
