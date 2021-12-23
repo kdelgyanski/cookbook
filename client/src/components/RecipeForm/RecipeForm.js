@@ -4,6 +4,8 @@ import { TextField, Counter, Dropdown, ImagePicker, Ingredients, Steps } from '.
 
 import { CATEGORY, SEASONAL, COURSE, DIFFICULTY } from '../../constants';
 
+import './RecipeForm.css';
+
 import defaultPreviewImage from '../../assets/images/no_image.svg'
 
 const reducer = (recipe, action) => {

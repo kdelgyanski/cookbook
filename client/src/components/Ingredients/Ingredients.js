@@ -20,7 +20,7 @@ const Ingredients = ({
     }
 
     return (
-        <div>
+        <div className='ingredients-panel'>
             <h2>Ingredients</h2>
             {((children && children.length) || shouldRenderNewIngredient) && <div className='list-wrapper'>
                 <ul className='list-group list-group-flush ingredients'>
@@ -38,10 +38,10 @@ const Ingredients = ({
             </div>}
             {onAddIngredient && !shouldRenderNewIngredient && <button
                 id='add-new-ingredient'
-                className='btn btn-primary'
+                className='btn btn-primary add-new-ingredient-btn'
                 onClick={() => setShouldRenderNewIngredient(old => !old)}
             >
-                <BsPlus />
+                <BsPlus /> Add new ingredient
             </button>}
         </div>
     );

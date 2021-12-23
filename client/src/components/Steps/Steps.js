@@ -5,6 +5,8 @@ import { BsCheck, BsX, BsPlus } from 'react-icons/bs';
 import Step from './Step';
 import { TextField } from '../TextField';
 
+import './Steps.css';
+
 const Steps = ({
     children,
     onAddStep,
@@ -15,12 +17,13 @@ const Steps = ({
     const [newStep, setNewStep] = React.useState(null);
 
     return (
-        <div>
+        <div className='steps-panel'>
             <h2>Steps</h2>
             {((children && children.length) || shouldRenderNewStep) && <div className='list-wrapper'>
-                <ul className='list-group list-group-flush steps'>
+                <ol className='list-group list-group-flush steps'>
                     {children && children.length > 0 && children.map((s, i) =>
                         <Step
+                            id={i}
                             key={i}
                             value={s}
                             onDeleteStep={onDeleteStep && (value => onDeleteStep(value))}
@@ -57,14 +60,14 @@ const Steps = ({
                             </button>
                         </div>
                     </li>}
-                </ul>
+                </ol>
             </div>}
             {onAddStep && !shouldRenderNewStep && <button
                 id='add-new-step'
-                className='btn btn-primary'
+                className='btn btn-primary add-new-step-btn'
                 onClick={() => setShouldRenderNewStep(old => !old)}
             >
-                <BsPlus />
+                <BsPlus /> Add new step
             </button>}
         </div>
     );

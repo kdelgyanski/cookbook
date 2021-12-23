@@ -1,3 +1,11 @@
+.ingredients-panel {
+    margin-bottom: 2em;
+}
+
+.ingredients-panel .add-new-ingredient-btn {
+    margin-top: 1em;
+}
+
 .list-wrapper {
     border: 1px solid #FDAB07;
     border-radius: 5px;
