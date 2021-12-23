@@ -89,6 +89,7 @@ const Home = () => {
                             return 1;
                         }
                     })
+                    .slice(0, 3)
                     .map(r =>
                         <Card
                             id={r.id}

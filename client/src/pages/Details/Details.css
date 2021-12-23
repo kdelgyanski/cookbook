@@ -4,7 +4,7 @@
 
 .details .recipe-header {
     display: flex;
-    max-height: 30em;
+    max-height: 40em;
 }
 
 .details .recipe-header .infos-container, .details .recipe-header .image-container {
@@ -15,6 +15,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
+}
+
+.details .recipe-header .infos-container .time {
+    margin-right: 1em;
 }
 
 .details .recipe-header .image-container .preview-img {

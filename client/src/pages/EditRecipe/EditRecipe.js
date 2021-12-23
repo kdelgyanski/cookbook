@@ -23,7 +23,7 @@ const EditRecipe = () => {
                 const response = await recipeService.getById(recipeId);
                 setRecipe(response);
             } catch (err) {
-                setError(err);
+                setError(err.message);
             }
 
         };
@@ -38,7 +38,7 @@ const EditRecipe = () => {
             await recipeService.updateRecipe(recipe, auth.token);
             navigate(navigate(`/details/${recipe.id}`));
         } catch (err) {
-            setError(err);
+            setError(err.message);
         }
 
     };

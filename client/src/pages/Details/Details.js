@@ -35,7 +35,7 @@ const Details = () => {
                 setRecipe(response);
                 setLabels([response.course, response.difficulty, ...response.category, ...response.seasonal]);
             } catch (err) {
-                console.log(err);
+                setError(err.message);
             }
 
         };
@@ -97,8 +97,8 @@ const Details = () => {
                         <div className='labels'>
                             {labels.map((l, i) => <Badge key={i} >{l}</Badge>)}
                         </div>
-                        <span>Preparation time: {recipe.preparationTime}</span>
-                        <span>Time to cook: {recipe.timeToCook}</span>
+                        <span className='time'>Preparation time: {recipe.preparationTime}</span>
+                        <span className='time'>Time to cook: {recipe.timeToCook}</span>
                         <div className='recipe-ingredients'>
                             <h2>Serving portions: {recipe.servingPortions}</h2>
                             <Ingredients>{recipe.ingredients}</Ingredients>
