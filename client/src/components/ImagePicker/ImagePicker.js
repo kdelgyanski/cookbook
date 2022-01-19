@@ -41,6 +41,7 @@ const ImagePicker = ({
         } else {
             setInitialImage(null);
             setFile(null);
+            setPreviewUrl(null);
         }
     }, [imageFile]);
 
