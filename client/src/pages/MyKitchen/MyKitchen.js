@@ -53,13 +53,7 @@ const MyKitchen = () => {
                 className='my-recipes-panel'
                 title='My Recipes'
             >
-                {recipes.map(r =>
-                    <Card
-                        id={r.id}
-                        key={r.title}
-                        title={r.title}
-                        imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
-                    />)}
+                {recipes.map(r => <Card key={r.title}>{r}</Card>)}
             </Panel>}
         </Page>
     );

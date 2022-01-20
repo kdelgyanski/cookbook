@@ -90,14 +90,7 @@ const Home = () => {
                         }
                     })
                     .slice(0, 3)
-                    .map(r =>
-                        <Card
-                            id={r.id}
-                            key={r.id}
-                            title={r.title}
-                            imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
-                        />
-                    )}
+                    .map(r => <Card key={r.id}>{r}</Card>)}
             </Panel>
 
             <Panel
@@ -106,14 +99,7 @@ const Home = () => {
                 title='Seasonal'
                 viewMoreUrl={`/search?seasonal=${getActualSeason()}`}
             >
-                {seasonalTop.map(recipe =>
-                    <Card
-                        id={recipe.id}
-                        key={recipe.id}
-                        title={recipe.title}
-                        imgUrl={recipe.image ? `http://localhost:8000/${recipe.image}` : null}
-                    />
-                )}
+                {seasonalTop.map(recipe => <Card key={recipe.id}>{recipe}</Card>)}
             </Panel>
         </Page>
     );

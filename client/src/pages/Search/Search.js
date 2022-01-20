@@ -113,14 +113,7 @@ const Search = () => {
                 singleItem={recipes.length === 0}
             >
                 {recipes.length > 0
-                    ? recipes.map(r =>
-                        <Card
-                            id={r.id}
-                            key={r.id}
-                            title={r.title}
-                            imgUrl={r.image ? `http://localhost:8000/${r.image}` : null}
-                        />
-                    )
+                    ? recipes.map(r => <Card key={r.id}>{r}</Card>)
                     : <p className='no-results-message'>Sorry, no recipes were found! Try changing the search parameters.</p>
                 }
             </Panel>
