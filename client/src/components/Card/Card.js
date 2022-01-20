@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import * as recipeService from '../../services/recipeService';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import './Card.css';
 
 const Card = ({
-    id,
     className,
-    children
+    children,
+    onLike,
+    liked
 }) => {
 
     const navigate = useNavigate();
@@ -17,16 +18,22 @@ const Card = ({
 
     const [recipe, setRecipe] = useState(children);
     const [error, setError] = useState(null);
+    const [isLiked, setIsLiked] = useState(liked);
 
-    const isLiked = recipe.likedBy && recipe.likedBy.includes(auth.userId);
+    useEffect(() => {
+        setIsLiked(liked);
+    }, [liked]);
+
     const imgUrl = recipe.image ? `http://localhost:8000/${recipe.image}` : null;
 
     const handleLike = async () => {
 
         if (recipe.likedBy && recipe.likedBy.includes(auth.userId)) {
             recipe.likedBy = recipe.likedBy.filter(u => u !== auth.userId);
+            setIsLiked(false);
         } else {
             recipe.likedBy.push(auth.userId);
+            setIsLiked(true);
         }
 
         try {
@@ -35,7 +42,6 @@ const Card = ({
         } catch (err) {
             setError(err.message);
         }
-
     };
 
     return (
@@ -53,7 +59,7 @@ const Card = ({
                     className='btn btn-primary like-recipe-btn'
                     onClick={e => {
                         e.stopPropagation();
-                        handleLike();
+                        handleLike().then(() => onLike && onLike());
                     }}
                 >
                     {isLiked ? <BsHeartFill /> : <BsHeart />}

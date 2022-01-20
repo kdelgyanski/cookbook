@@ -13,26 +13,23 @@ const MyKitchen = () => {
     const navigate = useNavigate();
 
     const [recipes, setRecipes] = useState([]);
+    const [favourites, setFavourites] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchRecipies = async () => {
+        fetchAllRecipes();
+    }, []);
 
-            try {
-                const recipes = await recipeService.getByAuthorId(userId);
-                setRecipes(recipes);
-            } catch (err) {
-                if (err.statusCode === 404) {
-                    setRecipes([]);
-                } else {
-                    setError(err.message);
-                }
-            }
+    const fetchAllRecipes = async () => {
+
+        try {
+            const response = await recipeService.getAll();
+            setFavourites(response.filter(r => r.likedBy.includes(userId)));
+            setRecipes(response.filter(r => r.authorId === userId));
+        } catch (err) {
+            setError(err.message);
         }
-
-        fetchRecipies();
-
-    }, [userId]);
+    };
 
     return (
         <Page
@@ -53,7 +50,26 @@ const MyKitchen = () => {
                 className='my-recipes-panel'
                 title='My Recipes'
             >
-                {recipes.map(r => <Card key={r.title}>{r}</Card>)}
+                {recipes.map(r => <Card
+                    key={r.id}
+                    onLike={() => fetchAllRecipes()}
+                    liked={r.likedBy && r.likedBy.includes(userId)}
+                >
+                    {r}
+                </Card>)}
+            </Panel>}
+
+            {favourites.length > 0 && <Panel
+                className='my-favourites-panel'
+                title='My Favourites'
+            >
+                {favourites.map(r => <Card
+                    key={r.id}
+                    onLike={() => fetchAllRecipes()}
+                    liked={r.likedBy && r.likedBy.includes(userId)}
+                >
+                    {r}
+                </Card>)}
             </Panel>}
         </Page>
     );

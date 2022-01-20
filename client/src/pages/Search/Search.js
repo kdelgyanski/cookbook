@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
+import AuthContext from '../../context/AuthContext';
 import { useQueryParams } from '../../hooks';
 import Page from '../Page';
 import { Panel, Card, TextField, Dropdown } from '../../components';
@@ -9,6 +10,8 @@ import * as recipeService from '../../services/recipeService';
 import './Search.css';
 
 const Search = () => {
+
+    const auth = useContext(AuthContext);
 
     const [queryParams, setQueryParams] = useQueryParams();
     const [recipes, setRecipes] = useState([]);
@@ -113,7 +116,7 @@ const Search = () => {
                 singleItem={recipes.length === 0}
             >
                 {recipes.length > 0
-                    ? recipes.map(r => <Card key={r.id}>{r}</Card>)
+                    ? recipes.map(r => <Card key={r.id} liked={r.likedBy && r.likedBy.includes(auth.userId)}>{r}</Card>)
                     : <p className='no-results-message'>Sorry, no recipes were found! Try changing the search parameters.</p>
                 }
             </Panel>

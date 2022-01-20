@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { Card, TextField, Panel } from '../../components';
+import AuthContext from '../../context/AuthContext';
 import Page from '../Page';
 import * as recipeService from '../../services/recipeService';
 
@@ -11,6 +12,8 @@ import logo from '../../assets/images/mish_mash_2.png';
 const Home = () => {
 
     const navigate = useNavigate();
+
+    const auth = useContext(AuthContext);
 
     const [recipes, setRecipes] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -90,7 +93,12 @@ const Home = () => {
                         }
                     })
                     .slice(0, 3)
-                    .map(r => <Card key={r.id}>{r}</Card>)}
+                    .map(r => <Card
+                        key={r.id}
+                        liked={r.likedBy && r.likedBy.includes(auth.userId)}
+                    >
+                        {r}
+                    </Card>)}
             </Panel>
 
             <Panel
@@ -99,7 +107,12 @@ const Home = () => {
                 title='Seasonal'
                 viewMoreUrl={`/search?seasonal=${getActualSeason()}`}
             >
-                {seasonalTop.map(recipe => <Card key={recipe.id}>{recipe}</Card>)}
+                {seasonalTop.map(r => <Card
+                    key={r.id}
+                    liked={r.likedBy && r.likedBy.includes(auth.userId)}
+                >
+                    {r}
+                </Card>)}
             </Panel>
         </Page>
     );
